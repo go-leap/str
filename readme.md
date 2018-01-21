@@ -135,12 +135,12 @@ func Fewest(strs []string, substr string, otherwise func([]string) string) (s st
 Fewest returns the `s` in `strs` with the lowest `strings.Count` of `substr`. If
 the count is identical for all, it returns `otherwise(strs)` (if supplied).
 
-#### func  Filtered
+#### func  Filt
 
 ```go
-func Filtered(strs []string, check func(string) bool) (filtered []string)
+func Filt(strs []string, check func(string) bool) (filtered []string)
 ```
-Filtered returns all `strs` that satisfy `check`.
+Filt returns all `strs` that satisfy `check`.
 
 #### func  FirstIn
 
@@ -217,6 +217,13 @@ func Replace(s string, oldNewPairs ...string) string
 Replace allocates a one-off throw-away `strings.NewReplacer` to perform the
 specified replacements.
 
+#### func  Sans
+
+```go
+func Sans(strs []string, excludedStrs ...string) []string
+```
+Sans returns `strs` without the specified `excludedStrs`.
+
 #### func  Shortest
 
 ```go
@@ -267,13 +274,6 @@ ToInt returns either the `int64` denoted by `s`, or `fallback`.
 func ToUint(s string, fallback uint64) uint64
 ```
 ToUint returns either the `uint64` denoted by `s`, or `fallback`.
-
-#### func  Without
-
-```go
-func Without(strs []string, withoutVals ...string) []string
-```
-Without returns `strs` sans all specified `withoutVals`.
 
 #### type Buf
 

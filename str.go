@@ -156,8 +156,8 @@ func Fewest(strs []string, substr string, otherwise func([]string) string) (s st
 	return
 }
 
-// Filtered returns all `strs` that satisfy `check`.
-func Filtered(strs []string, check func(string) bool) (filtered []string) {
+// Filt returns all `strs` that satisfy `check`.
+func Filt(strs []string, check func(string) bool) (filtered []string) {
 	if filtered = strs; len(strs) > 0 && check != nil {
 		filtered = make([]string, 0, len(strs))
 		for _, s := range strs {
@@ -264,6 +264,13 @@ func Replace(s string, oldNewPairs ...string) string {
 	return strings.NewReplacer(oldNewPairs...).Replace(s)
 }
 
+// Sans returns `strs` without the specified `excludedStrs`.
+func Sans(strs []string, excludedStrs ...string) []string {
+	return Filt(strs, func(s string) bool {
+		return !In(s, excludedStrs...)
+	})
+}
+
 // Shortest returns the shortest `s` in `strs`.
 func Shortest(strs []string) (s string) {
 	for _, str := range strs {
@@ -317,11 +324,4 @@ func ToUint(s string, fallback uint64) uint64 {
 		return v
 	}
 	return fallback
-}
-
-// Without returns `strs` sans all specified `withoutVals`.
-func Without(strs []string, withoutVals ...string) []string {
-	return Filtered(strs, func(s string) bool {
-		return !In(s, withoutVals...)
-	})
 }
