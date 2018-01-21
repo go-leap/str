@@ -12,23 +12,41 @@ var (
 	// Fmt aliases `fmt.Sprintf` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `fmt` import.
 	Fmt = fmt.Sprintf
 
+	// Has aliases `strings.Contains` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	Has = strings.Contains
+
+	// Int aliases `strconv.Itoa` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strconv` import.
+	Int = strconv.Itoa
+
+	// Join aliases `strings.Join` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	Join = strings.Join
+
+	// Lo aliases `strings.ToLower` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	Lo = strings.ToLower
+
 	// Pos aliases `strings.Index` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Pos = strings.Index
 
 	// Pref aliases `strings.HasPrefix` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Pref = strings.HasPrefix
 
-	// Join aliases `strings.Join` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
-	Join = strings.Join
-
-	// Int aliases `strconv.Itoa` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strconv` import.
-	Int = strconv.Itoa
+	// Repl aliases `strings.NewReplacer` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	Repl = strings.NewReplacer
 
 	// Suff aliases `strings.HasSuffix` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Suff = strings.HasSuffix
 
+	// Times aliases `strings.Repeat` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	Times = strings.Repeat
+
 	// Trim aliases `strings.TrimSpace` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Trim = strings.TrimSpace
+
+	// TrimSuff aliases `strings.TrimSuffix` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	TrimSuff = strings.TrimSuffix
+
+	// Up aliases `strings.ToUpper` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	Up = strings.ToUpper
 )
 
 // AfterFirst returns the suffix of `s` beginning right after the first occurrence of `needle`, or `otherwise` if no match.
@@ -111,6 +129,17 @@ func Combine(s1 string, sep string, s2 string) string {
 	return s2
 }
 
+// EnsureCase returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be upper-case if `upper`, or lower-case if not.
+func EnsureCase(s string, runeIndex int, upper bool) string {
+	f := unicode.ToLower
+	if upper {
+		f = unicode.ToUpper
+	}
+	runes := []rune(s)
+	runes[runeIndex] = f(runes[runeIndex])
+	return string(runes)
+}
+
 // Fewest returns the `s` in `strs` with the lowest `strings.Count` of `substr`.
 // If the count is identical for all, it returns `otherwise(strs)` (if supplied).
 func Fewest(strs []string, substr string, otherwise func([]string) string) (s string) {
@@ -140,6 +169,16 @@ func Filtered(strs []string, check func(string) bool) (filtered []string) {
 	return
 }
 
+// FirstIn returns the first in `subStrings` to satisfy `strings.Contains(s, substr)`, or `""`.
+func FirstIn(s string, subStrings ...string) string {
+	for _, substr := range subStrings {
+		if strings.Contains(s, substr) {
+			return substr
+		}
+	}
+	return ""
+}
+
 // FirstOf returns the first non-empty `s` encountered in `strs`.
 func FirstOf(strs ...string) (s string) {
 	for _, s = range strs {
@@ -148,6 +187,11 @@ func FirstOf(strs ...string) (s string) {
 		}
 	}
 	return
+}
+
+// Has1Of returns whether `s` contains any of the specified `subStrings`.
+func Has1Of(s string, subStrings ...string) bool {
+	return FirstIn(s, subStrings...) != ""
 }
 
 // In returns whether `strs` contains `s`.
@@ -202,6 +246,24 @@ func Map(strs []string, f func(string) string) (items []string) {
 	return
 }
 
+// Pref1Of returns the first of the specified (non-empty) `prefixes` that `s` begins with, or `""`.
+func Pref1Of(s string, prefixes ...string) string {
+	for _, prefix := range prefixes {
+		if prefix != "" && strings.HasPrefix(s, prefix) {
+			return prefix
+		}
+	}
+	return ""
+}
+
+// Replace allocates a one-off throw-away `strings.NewReplacer` to perform the specified replacements.
+func Replace(s string, oldNewPairs ...string) string {
+	if len(oldNewPairs) == 0 {
+		return s
+	}
+	return strings.NewReplacer(oldNewPairs...).Replace(s)
+}
+
 // Shortest returns the shortest `s` in `strs`.
 func Shortest(strs []string) (s string) {
 	for _, str := range strs {
@@ -218,6 +280,11 @@ func Split(s string, sep string) (strs []string) {
 		strs = strings.Split(s, sep)
 	}
 	return
+}
+
+//	SplitByWhitespaceAndJoin returns `s` with all occurrences of multiple subsequent `unicode.IsSpace` runes in a row collapsed into one single white-space (`" "`) rune.
+func SplitByWhitespaceAndReJoinBySpace(s string) string {
+	return strings.Join(strings.Fields(s), " ")
 }
 
 // ToBool returns either the `bool` denoted by `s`, or `fallback`.
