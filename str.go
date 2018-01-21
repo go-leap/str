@@ -38,7 +38,7 @@ var (
 	Trim = strings.TrimSpace
 )
 
-// Split returns an empty slice if `s` is emtpy, otherwise calls `strings.Split`
+// Split returns an empty slice if `s` is emtpy, otherwise calls `strings.Split`.
 func Split(s string, sep string) (slice []string) {
 	if len(s) != 0 {
 		slice = strings.Split(s, sep)
