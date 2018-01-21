@@ -189,6 +189,10 @@ func FirstOf(strs ...string) (s string) {
 	return
 }
 
+func Int64(i int64) string {
+	return strconv.FormatInt(i, 10)
+}
+
 // Has1Of returns whether `s` contains any of the specified `subStrings`.
 func Has1Of(s string, subStrings ...string) bool {
 	return FirstIn(s, subStrings...) != ""

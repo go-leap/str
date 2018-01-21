@@ -171,6 +171,12 @@ func In(s string, strs ...string) bool
 ```
 In returns whether `strs` contains `s`.
 
+#### func  Int64
+
+```go
+func Int64(i int64) string
+```
+
 #### func  IsLower
 
 ```go
