@@ -2,6 +2,7 @@ package ustr
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 	"unicode"
@@ -110,6 +111,35 @@ func Combine(s1 string, sep string, s2 string) string {
 	return s2
 }
 
+// Fewest returns the `s` in `strs` with the lowest `strings.Count` of `substr`.
+// If the count is identical for all, it returns `otherwise(strs)` (if supplied).
+func Fewest(strs []string, substr string, otherwise func([]string) string) (s string) {
+	lastnum, counts := math.MaxInt64, make(map[int]bool, len(strs))
+	for _, str := range strs {
+		num := strings.Count(str, substr)
+		if counts[num] = true; num < lastnum {
+			s, lastnum = str, num
+		}
+	}
+	if len(counts) == 1 && otherwise != nil {
+		s = otherwise(strs)
+	}
+	return
+}
+
+// Filtered returns all `strs` that satisfy `check`.
+func Filtered(strs []string, check func(string) bool) (filtered []string) {
+	if filtered = strs; len(strs) > 0 && check != nil {
+		filtered = make([]string, 0, len(strs))
+		for _, s := range strs {
+			if check(s) {
+				filtered = append(filtered, s)
+			}
+		}
+	}
+	return
+}
+
 // FirstOf returns the first non-empty `s` encountered in `strs`.
 func FirstOf(strs ...string) (s string) {
 	for _, s = range strs {
@@ -150,6 +180,16 @@ func IsUpper(s string) bool {
 	return true
 }
 
+// Longest returns the longest `s` in `strs`.
+func Longest(strs []string) (s string) {
+	for _, str := range strs {
+		if len(str) > len(s) {
+			s = str
+		}
+	}
+	return
+}
+
 // Map applies `f` to each `string` in `strs` and returns the results in `items`.
 func Map(strs []string, f func(string) string) (items []string) {
 	if f == nil {
@@ -162,10 +202,20 @@ func Map(strs []string, f func(string) string) (items []string) {
 	return
 }
 
+// Shortest returns the shortest `s` in `strs`.
+func Shortest(strs []string) (s string) {
+	for _, str := range strs {
+		if s == "" || len(str) < len(s) {
+			s = str
+		}
+	}
+	return
+}
+
 // Split returns an empty slice if `s` is emtpy, otherwise calls `strings.Split`.
-func Split(s string, sep string) (slice []string) {
+func Split(s string, sep string) (strs []string) {
 	if len(s) != 0 {
-		slice = strings.Split(s, sep)
+		strs = strings.Split(s, sep)
 	}
 	return
 }
@@ -200,4 +250,11 @@ func ToUint(s string, fallback uint64) uint64 {
 		return v
 	}
 	return fallback
+}
+
+// Without returns `strs` sans all specified `withoutVals`.
+func Without(strs []string, withoutVals ...string) []string {
+	return Filtered(strs, func(s string) bool {
+		return !In(s, withoutVals...)
+	})
 }

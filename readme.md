@@ -101,6 +101,21 @@ func Combine(s1 string, sep string, s2 string) string
 ```
 Combine returns `s1` or `s2` or `s1 + sep + s2`, depending on their emptyness.
 
+#### func  Fewest
+
+```go
+func Fewest(strs []string, substr string, otherwise func([]string) string) (s string)
+```
+Fewest returns the `s` in `strs` with the lowest `strings.Count` of `substr`. If
+the count is identical for all, it returns `otherwise(strs)` (if supplied).
+
+#### func  Filtered
+
+```go
+func Filtered(strs []string, check func(string) bool) (filtered []string)
+```
+Filtered returns all `strs` that satisfy `check`.
+
 #### func  FirstOf
 
 ```go
@@ -131,6 +146,13 @@ func IsUpper(s string) bool
 IsUpper returns whether all `unicode.IsLetter` runes in `s` satisfy
 `unicode.IsUpper`.
 
+#### func  Longest
+
+```go
+func Longest(strs []string) (s string)
+```
+Longest returns the longest `s` in `strs`.
+
 #### func  Map
 
 ```go
@@ -138,10 +160,17 @@ func Map(strs []string, f func(string) string) (items []string)
 ```
 Map applies `f` to each `string` in `strs` and returns the results in `items`.
 
+#### func  Shortest
+
+```go
+func Shortest(strs []string) (s string)
+```
+Shortest returns the shortest `s` in `strs`.
+
 #### func  Split
 
 ```go
-func Split(s string, sep string) (slice []string)
+func Split(s string, sep string) (strs []string)
 ```
 Split returns an empty slice if `s` is emtpy, otherwise calls `strings.Split`.
 
@@ -172,6 +201,13 @@ ToInt returns either the `int64` denoted by `s`, or `fallback`.
 func ToUint(s string, fallback uint64) uint64
 ```
 ToUint returns either the `uint64` denoted by `s`, or `fallback`.
+
+#### func  Without
+
+```go
+func Without(strs []string, withoutVals ...string) []string
+```
+Without returns `strs` sans all specified `withoutVals`.
 
 #### type Buf
 
