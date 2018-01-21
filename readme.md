@@ -131,6 +131,13 @@ func IsUpper(s string) bool
 IsUpper returns whether all `unicode.IsLetter` runes in `s` satisfy
 `unicode.IsUpper`.
 
+#### func  Map
+
+```go
+func Map(strs []string, f func(string) string) (items []string)
+```
+Map applies `f` to each `string` in `strs` and returns the results in `items`.
+
 #### func  Split
 
 ```go

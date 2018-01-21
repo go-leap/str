@@ -150,6 +150,18 @@ func IsUpper(s string) bool {
 	return true
 }
 
+// Map applies `f` to each `string` in `strs` and returns the results in `items`.
+func Map(strs []string, f func(string) string) (items []string) {
+	if f == nil {
+		return strs
+	}
+	items = make([]string, len(strs))
+	for i, s := range strs {
+		items[i] = f(s)
+	}
+	return
+}
+
 // Split returns an empty slice if `s` is emtpy, otherwise calls `strings.Split`.
 func Split(s string, sep string) (slice []string) {
 	if len(s) != 0 {
