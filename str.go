@@ -178,8 +178,8 @@ func Fewest(strs []string, substr string, otherwise func([]string) string) (s st
 	return
 }
 
-// Filt returns all `strs` that satisfy `check`.
-func Filt(strs []string, check func(string) bool) (filtered []string) {
+// Filter returns all `strs` that satisfy `check`.
+func Filter(strs []string, check func(string) bool) (filtered []string) {
 	if filtered = strs; len(strs) > 0 && check != nil {
 		filtered = make([]string, 0, len(strs))
 		for _, s := range strs {
@@ -211,6 +211,7 @@ func FirstOf(strs ...string) (s string) {
 	return
 }
 
+// Int64 aliases `strconv.FormatInt(i, 10)` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strconv` import.
 func Int64(i int64) string {
 	return strconv.FormatInt(i, 10)
 }
@@ -292,7 +293,7 @@ func Replace(s string, oldNewPairs ...string) string {
 
 // Sans returns `strs` without the specified `excludedStrs`.
 func Sans(strs []string, excludedStrs ...string) []string {
-	return Filt(strs, func(s string) bool {
+	return Filter(strs, func(s string) bool {
 		return !In(s, excludedStrs...)
 	})
 }

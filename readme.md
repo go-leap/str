@@ -156,12 +156,12 @@ func Fewest(strs []string, substr string, otherwise func([]string) string) (s st
 Fewest returns the `s` in `strs` with the lowest `strings.Count` of `substr`. If
 the count is identical for all, it returns `otherwise(strs)` (if supplied).
 
-#### func  Filt
+#### func  Filter
 
 ```go
-func Filt(strs []string, check func(string) bool) (filtered []string)
+func Filter(strs []string, check func(string) bool) (filtered []string)
 ```
-Filt returns all `strs` that satisfy `check`.
+Filter returns all `strs` that satisfy `check`.
 
 #### func  FirstIn
 
@@ -197,6 +197,9 @@ In returns whether `strs` contains `s`.
 ```go
 func Int64(i int64) string
 ```
+Int64 aliases `strconv.FormatInt(i, 10)` — merely a handy short-hand during
+rapid iteration in non-critical code-paths that already do import `ustr` to not
+have to repeatedly pull in and out the extra `strconv` import.
 
 #### func  IsLower
 
@@ -367,7 +370,7 @@ FirstMatch returns the first in `strs` that `me.Match`es, or `""`.
 ```go
 func (me Pat) Match(s string) bool
 ```
-Matches returns whether the `s` matches `me`, which could:
+Matches returns whether `s` matches `me`, which could:
 
 - begin and end with an asterisk `*` wildcard: "contains" semantics
 
@@ -375,9 +378,9 @@ Matches returns whether the `s` matches `me`, which could:
 
 - only end with an asterisk `*` wildcard: "beginsWith" semantics
 
-- only consist of an asterisk `*` wildcard: returns `true` always
+- only consist of an asterisk `*` wildcard: always matches any `s`
 
-- otherwise: returns whether `s == me`.
+- otherwise: matches if `s == me`.
 
 #### type Pats
 

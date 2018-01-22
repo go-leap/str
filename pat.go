@@ -54,7 +54,7 @@ func (me Pat) FirstMatch(strs ...string) string {
 	return ""
 }
 
-// Matches returns whether the `s` matches `me`, which could:
+// Matches returns whether `s` matches `me`, which could:
 //
 // - begin and end with an asterisk `*`  wildcard: "contains" semantics
 //
@@ -62,9 +62,9 @@ func (me Pat) FirstMatch(strs ...string) string {
 //
 // - only end with an asterisk `*` wildcard: "beginsWith" semantics
 //
-// - only consist of an asterisk `*` wildcard: returns `true` always
+// - only consist of an asterisk `*` wildcard: always matches any `s`
 //
-// - otherwise: returns whether `s == me`.
+// - otherwise: matches if `s == me`.
 func (me Pat) Match(s string) bool {
 	l := len(me)
 	if l == 0 || me == "*" {
