@@ -251,7 +251,8 @@ begins with, or `""`.
 func Replace(s string, oldNewPairs ...string) string
 ```
 Replace allocates a one-off throw-away `strings.NewReplacer` to perform the
-specified replacements.
+specified replacements if `oldNewPairs` has more than 1 pair (2 elements);
+otherwise, calls `strings.Replace`.
 
 #### func  Sans
 
@@ -290,26 +291,33 @@ func ToBool(s string, fallback bool) bool
 ```
 ToBool returns either the `bool` denoted by `s`, or `fallback`.
 
-#### func  ToFloat
+#### func  ToF64
 
 ```go
-func ToFloat(s string, fallback float64) float64
+func ToF64(s string, fallback float64) float64
 ```
-ToFloat returns either the `float64` denoted by `s`, or `fallback`.
+ToF64 returns either the `float64` denoted by `s`, or `fallback`.
+
+#### func  ToI64
+
+```go
+func ToI64(s string, fallback int64) int64
+```
+ToI64 returns either the `int64` denoted by `s`, or `fallback`.
 
 #### func  ToInt
 
 ```go
-func ToInt(s string, fallback int64) int64
+func ToInt(s string, fallback int) int
 ```
-ToInt returns either the `int64` denoted by `s`, or `fallback`.
+ToInt returns either the `int` denoted by `s`, or `fallback`.
 
-#### func  ToUint
+#### func  ToUi64
 
 ```go
-func ToUint(s string, fallback uint64) uint64
+func ToUi64(s string, fallback uint64) uint64
 ```
-ToUint returns either the `uint64` denoted by `s`, or `fallback`.
+ToUi64 returns either the `uint64` denoted by `s`, or `fallback`.
 
 #### type Buf
 

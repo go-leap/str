@@ -289,10 +289,12 @@ func Pref1Of(s string, prefixes ...string) string {
 	return ""
 }
 
-// Replace allocates a one-off throw-away `strings.NewReplacer` to perform the specified replacements.
+// Replace allocates a one-off throw-away `strings.NewReplacer` to perform the specified replacements if `oldNewPairs` has more than 1 pair (2 elements); otherwise, calls `strings.Replace`.
 func Replace(s string, oldNewPairs ...string) string {
-	if len(oldNewPairs) == 0 {
+	if l := len(oldNewPairs); l == 0 {
 		return s
+	} else if l == 2 {
+		return strings.Replace(s, oldNewPairs[0], oldNewPairs[1], -1)
 	}
 	return strings.NewReplacer(oldNewPairs...).Replace(s)
 }
@@ -335,24 +337,33 @@ func ToBool(s string, fallback bool) bool {
 	return fallback
 }
 
-// ToFloat returns either the `float64` denoted by `s`, or `fallback`.
-func ToFloat(s string, fallback float64) float64 {
+// ToF64 returns either the `float64` denoted by `s`, or `fallback`.
+func ToF64(s string, fallback float64) float64 {
 	if v, err := strconv.ParseFloat(s, 64); err == nil {
 		return v
 	}
 	return fallback
 }
 
-// ToInt returns either the `int64` denoted by `s`, or `fallback`.
-func ToInt(s string, fallback int64) int64 {
+// ToInt returns either the `int` denoted by `s`, or `fallback`.
+func ToInt(s string, fallback int) int {
+	i, e := strconv.Atoi(s)
+	if e != nil {
+		return fallback
+	}
+	return i
+}
+
+// ToI64 returns either the `int64` denoted by `s`, or `fallback`.
+func ToI64(s string, fallback int64) int64 {
 	if v, err := strconv.ParseInt(s, 0, 64); err == nil {
 		return v
 	}
 	return fallback
 }
 
-// ToUint returns either the `uint64` denoted by `s`, or `fallback`.
-func ToUint(s string, fallback uint64) uint64 {
+// ToUi64 returns either the `uint64` denoted by `s`, or `fallback`.
+func ToUi64(s string, fallback uint64) uint64 {
 	if v, err := strconv.ParseUint(s, 0, 64); err == nil {
 		return v
 	}
