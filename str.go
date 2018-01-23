@@ -147,6 +147,21 @@ func BreakOnLast(s string, needle string) (prefix string, suffix string) {
 	return
 }
 
+// Case returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be upper-case if `upper`, or lower-case if not.
+func Case(s string, runeIndex int, upper bool) string {
+	f := unicode.ToLower
+	if upper {
+		f = unicode.ToUpper
+	}
+	return Rune(s, runeIndex, f)
+}
+
+// Case returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be lower-case.
+func CaseLo(s string, runeIndex int) string { return Rune(s, runeIndex, unicode.ToLower) }
+
+// Case returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be upper-case.
+func CaseUp(s string, runeIndex int) string { return Rune(s, runeIndex, unicode.ToUpper) }
+
 // Combine returns `s1` or `s2` or `s1 + sep + s2`, depending on their emptyness.
 func Combine(s1 string, sep string, s2 string) string {
 	if h1 := s1 != ""; h1 && s2 != "" {
@@ -155,17 +170,6 @@ func Combine(s1 string, sep string, s2 string) string {
 		return s1
 	}
 	return s2
-}
-
-// EnsureCase returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be upper-case if `upper`, or lower-case if not.
-func EnsureCase(s string, runeIndex int, upper bool) string {
-	f := unicode.ToLower
-	if upper {
-		f = unicode.ToUpper
-	}
-	runes := []rune(s)
-	runes[runeIndex] = f(runes[runeIndex])
-	return string(runes)
 }
 
 // Fewest returns the `s` in `strs` with the lowest `strings.Count` of `substr`.
@@ -297,6 +301,13 @@ func Replace(s string, oldNewPairs ...string) string {
 		return strings.Replace(s, oldNewPairs[0], oldNewPairs[1], -1)
 	}
 	return strings.NewReplacer(oldNewPairs...).Replace(s)
+}
+
+// Rune returns `s` with the rune at `runeIndex` (not byte index) changed by `f`.
+func Rune(s string, runeIndex int, f func(rune) rune) string {
+	runes := []rune(s)
+	runes[runeIndex] = f(runes[runeIndex])
+	return string(runes)
 }
 
 // Sans returns `strs` without the specified `excludedStrs`.

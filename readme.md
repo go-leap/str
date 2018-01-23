@@ -139,20 +139,36 @@ func BreakOnLast(s string, needle string) (prefix string, suffix string)
 BreakOnLast returns the prefix and suffix next to the last `needle` encountered
 in `s`. (If no match, `prefix` is `""` and `suffix` will be `s`.)
 
+#### func  Case
+
+```go
+func Case(s string, runeIndex int, upper bool) string
+```
+Case returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be
+upper-case if `upper`, or lower-case if not.
+
+#### func  CaseLo
+
+```go
+func CaseLo(s string, runeIndex int) string
+```
+Case returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be
+lower-case.
+
+#### func  CaseUp
+
+```go
+func CaseUp(s string, runeIndex int) string
+```
+Case returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be
+upper-case.
+
 #### func  Combine
 
 ```go
 func Combine(s1 string, sep string, s2 string) string
 ```
 Combine returns `s1` or `s2` or `s1 + sep + s2`, depending on their emptyness.
-
-#### func  EnsureCase
-
-```go
-func EnsureCase(s string, runeIndex int, upper bool) string
-```
-EnsureCase returns `s` with the rune at `runeIndex` (not byte index) guaranteed
-to be upper-case if `upper`, or lower-case if not.
 
 #### func  Fewest
 
@@ -253,6 +269,13 @@ func Replace(s string, oldNewPairs ...string) string
 Replace allocates a one-off throw-away `strings.NewReplacer` to perform the
 specified replacements if `oldNewPairs` has more than 1 pair (2 elements);
 otherwise, calls `strings.Replace`.
+
+#### func  Rune
+
+```go
+func Rune(s string, runeIndex int, f func(rune) rune) string
+```
+Rune returns `s` with the rune at `runeIndex` (not byte index) changed by `f`.
 
 #### func  Sans
 
