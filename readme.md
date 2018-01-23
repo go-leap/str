@@ -7,8 +7,14 @@
 
 ```go
 var (
+	// Eq aliases `strings.EqualFold` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	Eq = strings.EqualFold
+
 	// Fmt aliases `fmt.Sprintf` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `fmt` import.
 	Fmt = fmt.Sprintf
+
+	// From aliases `fmt.Sprint` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `fmt` import.
+	From = fmt.Sprint
 
 	// Has aliases `strings.Contains` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Has = strings.Contains
