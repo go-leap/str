@@ -356,7 +356,7 @@ func ToF64(s string, fallback float64) float64 {
 	return fallback
 }
 
-// ToInt returns either the `int` denoted by `s`, or `fallback`.
+// ToInt returns either the `int` denoted by `s` (in base 10), or `fallback`.
 func ToInt(s string, fallback int) int {
 	i, e := strconv.Atoi(s)
 	if e != nil {
@@ -366,16 +366,16 @@ func ToInt(s string, fallback int) int {
 }
 
 // ToI64 returns either the `int64` denoted by `s`, or `fallback`.
-func ToI64(s string, fallback int64) int64 {
-	if v, err := strconv.ParseInt(s, 0, 64); err == nil {
+func ToI64(s string, base int, fallback int64) int64 {
+	if v, err := strconv.ParseInt(s, base, 64); err == nil {
 		return v
 	}
 	return fallback
 }
 
 // ToUi64 returns either the `uint64` denoted by `s`, or `fallback`.
-func ToUi64(s string, fallback uint64) uint64 {
-	if v, err := strconv.ParseUint(s, 0, 64); err == nil {
+func ToUi64(s string, base int, fallback uint64) uint64 {
+	if v, err := strconv.ParseUint(s, base, 64); err == nil {
 		return v
 	}
 	return fallback

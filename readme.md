@@ -324,7 +324,7 @@ ToF64 returns either the `float64` denoted by `s`, or `fallback`.
 #### func  ToI64
 
 ```go
-func ToI64(s string, fallback int64) int64
+func ToI64(s string, base int, fallback int64) int64
 ```
 ToI64 returns either the `int64` denoted by `s`, or `fallback`.
 
@@ -333,12 +333,12 @@ ToI64 returns either the `int64` denoted by `s`, or `fallback`.
 ```go
 func ToInt(s string, fallback int) int
 ```
-ToInt returns either the `int` denoted by `s`, or `fallback`.
+ToInt returns either the `int` denoted by `s` (in base 10), or `fallback`.
 
 #### func  ToUi64
 
 ```go
-func ToUi64(s string, fallback uint64) uint64
+func ToUi64(s string, base int, fallback uint64) uint64
 ```
 ToUi64 returns either the `uint64` denoted by `s`, or `fallback`.
 
