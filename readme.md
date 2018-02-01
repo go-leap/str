@@ -447,3 +447,14 @@ FirstMatch returns the first `Pat` in `me` to `Match(s)`, or `""`.
 func (me Pats) NoMatch(s string) bool
 ```
 NoMatch returns whether not a single `Pat` in `me` does `Match(s)`.
+
+#### type Writer
+
+```go
+type Writer interface {
+	WriteRune(rune) (int, error)
+	WriteString(string) (int, error)
+}
+```
+
+Writer is the interface that wraps the basic WriteRune and WriteString methods.

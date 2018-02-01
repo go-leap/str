@@ -5,6 +5,12 @@ import (
 	"fmt"
 )
 
+// Writer is the interface that wraps the basic WriteRune and WriteString methods.
+type Writer interface {
+	WriteRune(rune) (int, error)
+	WriteString(string) (int, error)
+}
+
 // Buf wraps `bytes.Buffer`.
 type Buf struct {
 	bytes.Buffer
