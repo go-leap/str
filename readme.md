@@ -123,12 +123,20 @@ func BeginsUpper(s string) bool
 BeginsUpper returns whether the first rune in `s` satisfies both
 `unicode.IsLetter` and `unicode.IsUpper`.
 
-#### func  BreakOnFirst
+#### func  BreakOnFirstOrPref
 
 ```go
-func BreakOnFirst(s string, needle string) (prefix string, suffix string)
+func BreakOnFirstOrPref(s string, needle string) (prefix string, suffix string)
 ```
-BreakOnFirst returns the prefix and suffix next to the first `needle`
+BreakOnFirstOrPref returns the prefix and suffix next to the first `needle`
+encountered in `s`. (If no match, `suffix` is `""` and `prefix` will be `s`.)
+
+#### func  BreakOnFirstOrSuff
+
+```go
+func BreakOnFirstOrSuff(s string, needle string) (prefix string, suffix string)
+```
+BreakOnFirstOrSuff returns the prefix and suffix next to the first `needle`
 encountered in `s`. (If no match, `prefix` is `""` and `suffix` will be `s`.)
 
 #### func  BreakOnLast

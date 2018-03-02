@@ -125,11 +125,22 @@ func BeginsUpper(s string) bool {
 	return false
 }
 
-// BreakOnFirst returns the prefix and suffix next to the first `needle` encountered in `s`.
+// BreakOnFirstOrSuff returns the prefix and suffix next to the first `needle` encountered in `s`.
 // (If no match, `prefix` is `""` and `suffix` will be `s`.)
-func BreakOnFirst(s string, needle string) (prefix string, suffix string) {
+func BreakOnFirstOrSuff(s string, needle string) (prefix string, suffix string) {
 	if i := strings.Index(s, needle); i < 0 {
 		suffix = s
+	} else {
+		prefix, suffix = s[:i], s[i+len(needle):]
+	}
+	return
+}
+
+// BreakOnFirstOrPref returns the prefix and suffix next to the first `needle` encountered in `s`.
+// (If no match, `suffix` is `""` and `prefix` will be `s`.)
+func BreakOnFirstOrPref(s string, needle string) (prefix string, suffix string) {
+	if i := strings.Index(s, needle); i < 0 {
+		prefix = s
 	} else {
 		prefix, suffix = s[:i], s[i+len(needle):]
 	}
