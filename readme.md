@@ -350,6 +350,13 @@ func ToUi64(s string, base int, fallback uint64) uint64
 ```
 ToUi64 returns either the `uint64` denoted by `s`, or `fallback`.
 
+#### func  Until
+
+```go
+func Until(s string, needle string) string
+```
+Until is a convenience short-hand for `BeforeFirst(s, needle, s)`.
+
 #### type Buf
 
 ```go

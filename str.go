@@ -391,3 +391,8 @@ func ToUi64(s string, base int, fallback uint64) uint64 {
 	}
 	return fallback
 }
+
+// Until is a convenience short-hand for `BeforeFirst(s, needle, s)`.
+func Until(s string, needle string) string {
+	return BeforeFirst(s, needle, s)
+}
