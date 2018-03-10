@@ -183,6 +183,15 @@ func Combine(s1 string, sep string, s2 string) string {
 	return s2
 }
 
+// Drop is a lower-level, byte-based TrimRight.
+func Drop(s string, r byte) string {
+	end := len(s)
+	for i := end - 1; i > -1 && s[i] == r; i-- {
+		end--
+	}
+	return s[:end]
+}
+
 // Fewest returns the `s` in `strs` with the lowest `strings.Count` of `substr`.
 // If the count is identical for all, it returns `otherwise(strs)` (if supplied).
 func Fewest(strs []string, substr string, otherwise func([]string) string) (s string) {
@@ -326,6 +335,15 @@ func Sans(strs []string, excludedStrs ...string) []string {
 	return Filter(strs, func(s string) bool {
 		return !In(s, excludedStrs...)
 	})
+}
+
+// Skip is a lower-level, byte-based TrimLeft.
+func Skip(s string, r byte) string {
+	var skip int
+	for i := 0; i < len(s) && s[i] == r; i++ {
+		skip++
+	}
+	return s[skip:]
 }
 
 // Shortest returns the shortest `s` in `strs`.

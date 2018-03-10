@@ -178,6 +178,13 @@ func Combine(s1 string, sep string, s2 string) string
 ```
 Combine returns `s1` or `s2` or `s1 + sep + s2`, depending on their emptyness.
 
+#### func  Drop
+
+```go
+func Drop(s string, r byte) string
+```
+Drop is a lower-level, byte-based TrimRight.
+
 #### func  Fewest
 
 ```go
@@ -298,6 +305,13 @@ Sans returns `strs` without the specified `excludedStrs`.
 func Shortest(strs []string) (s string)
 ```
 Shortest returns the shortest `s` in `strs`.
+
+#### func  Skip
+
+```go
+func Skip(s string, r byte) string
+```
+Skip is a lower-level, byte-based TrimLeft.
 
 #### func  Split
 
