@@ -19,14 +19,20 @@ var (
 	// Has aliases `strings.Contains` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Has = strings.Contains
 
-	// Idx aliases `strings.IndexRune` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
-	Idx = strings.IndexRune
+	// IdxB aliases `strings.IndexByte` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	IdxB = strings.IndexByte
+
+	// IdxR aliases `strings.IndexRune` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	IdxR = strings.IndexRune
 
 	// Int aliases `strconv.Itoa` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strconv` import.
 	Int = strconv.Itoa
 
 	// Join aliases `strings.Join` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Join = strings.Join
+
+	// LastB aliases `strings.LastIndexByte` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	LastB = strings.LastIndexByte
 
 	// Last aliases `strings.LastIndex` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Last = strings.LastIndex
@@ -221,6 +227,22 @@ FirstOf returns the first non-empty `s` encountered in `strs`.
 func Has1Of(s string, subStrings ...string) bool
 ```
 Has1Of returns whether `s` contains any of the specified `subStrings`.
+
+#### func  IdxBMatching
+
+```go
+func IdxBMatching(s string, needle byte, skipOneForEachAdditionalOccurrenceOf byte) (idx int)
+```
+IdxBMatching returns, for example, 3 for `("x[y]", ']', '[')` but 6 (not 5) for
+`("x[y[z]]", ']', '[')`.
+
+#### func  IdxRMatching
+
+```go
+func IdxRMatching(s string, needle rune, skipOneForEachAdditionalOccurrenceOf rune) (idx int)
+```
+IdxRMatching returns, for example, 3 for `("x[y]", ']', '[')` but 6 (not 5) for
+`("x[y[z]]", ']', '[')`.
 
 #### func  In
 

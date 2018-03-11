@@ -22,14 +22,20 @@ var (
 	// Has aliases `strings.Contains` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Has = strings.Contains
 
-	// Idx aliases `strings.IndexRune` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
-	Idx = strings.IndexRune
+	// IdxB aliases `strings.IndexByte` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	IdxB = strings.IndexByte
+
+	// IdxR aliases `strings.IndexRune` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	IdxR = strings.IndexRune
 
 	// Int aliases `strconv.Itoa` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strconv` import.
 	Int = strconv.Itoa
 
 	// Join aliases `strings.Join` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Join = strings.Join
+
+	// LastB aliases `strings.LastIndexByte` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
+	LastB = strings.LastIndexByte
 
 	// Last aliases `strings.LastIndex` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Last = strings.LastIndex
@@ -239,6 +245,36 @@ func FirstOf(strs ...string) (s string) {
 		}
 	}
 	return
+}
+
+// IdxBMatching returns, for example, 3 for `("x[y]", ']', '[')` but 6 (not 5) for `("x[y[z]]", ']', '[')`.
+func IdxBMatching(s string, needle byte, skipOneForEachAdditionalOccurrenceOf byte) (idx int) {
+	var skipcount int
+	for i := 0; i < len(s); i++ {
+		if s[i] == skipOneForEachAdditionalOccurrenceOf {
+			skipcount++
+		} else if s[i] == needle {
+			if skipcount--; skipcount == 0 {
+				return i
+			}
+		}
+	}
+	return -1
+}
+
+// IdxRMatching returns, for example, 3 for `("x[y]", ']', '[')` but 6 (not 5) for `("x[y[z]]", ']', '[')`.
+func IdxRMatching(s string, needle rune, skipOneForEachAdditionalOccurrenceOf rune) (idx int) {
+	var skipcount int
+	for i, r := range s {
+		if r == skipOneForEachAdditionalOccurrenceOf {
+			skipcount++
+		} else if r == needle {
+			if skipcount--; skipcount == 0 {
+				return i
+			}
+		}
+	}
+	return -1
 }
 
 // Int64 aliases `strconv.FormatInt(i, 10)` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strconv` import.
