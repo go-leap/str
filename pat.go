@@ -7,14 +7,14 @@ import (
 // Pats is a slice of `Pat`s.
 type Pats []Pat
 
-// Add `append`s all the specified `pats` to `me`.
-func (me *Pats) Add(pats ...Pat) {
-	*me = append(*me, pats...)
+// Add `append`s all the specified `pats` to `this`.
+func (this *Pats) Add(pats ...Pat) {
+	*this = append(*this, pats...)
 }
 
-// FirstMatch returns the first `Pat` in `me` to `Match(s)`, or `""`.
-func (me Pats) FirstMatch(s string) Pat {
-	for _, pat := range me {
+// FirstMatch returns the first `Pat` in `this` to `Match(s)`, or `""`.
+func (this Pats) FirstMatch(s string) Pat {
+	for _, pat := range this {
 		if pat.Match(s) {
 			return pat
 		}
@@ -22,9 +22,9 @@ func (me Pats) FirstMatch(s string) Pat {
 	return ""
 }
 
-// NoMatch returns whether not a single `Pat` in `me` does `Match(s)`.
-func (me Pats) NoMatch(s string) bool {
-	return me.FirstMatch(s) == ""
+// NoMatch returns whether not a single `Pat` in `this` does `Match(s)`.
+func (this Pats) NoMatch(s string) bool {
+	return this.FirstMatch(s) == ""
 }
 
 // Pat is a most-simplistic, overly-rudimentary, simplest-of-simpletons string pattern matcher.
@@ -32,11 +32,11 @@ func (me Pats) NoMatch(s string) bool {
 // This covers a bafflingly substantial amount of real-world use-cases — if more is needed, Go's `path.Match`, reg-exps etc. will deliver instead.
 type Pat string
 
-// AllMatch returns whether all the specified `strs` satisfy `me.Match`.
-func (me Pat) AllMatch(strs ...string) bool {
-	if me != "" && me != "*" {
+// AllMatch returns whether all the specified `strs` satisfy `this.Match`.
+func (this Pat) AllMatch(strs ...string) bool {
+	if this != "" && this != "*" {
 		for _, s := range strs {
-			if !me.Match(s) {
+			if !this.Match(s) {
 				return false
 			}
 		}
@@ -44,17 +44,17 @@ func (me Pat) AllMatch(strs ...string) bool {
 	return true
 }
 
-// FirstMatch returns the first in `strs` that `me.Match`es, or `""`.
-func (me Pat) FirstMatch(strs ...string) string {
+// FirstMatch returns the first in `strs` that `this.Match`es, or `""`.
+func (this Pat) FirstMatch(strs ...string) string {
 	for _, s := range strs {
-		if s != "" && me.Match(s) {
+		if s != "" && this.Match(s) {
 			return s
 		}
 	}
 	return ""
 }
 
-// Matches returns whether `s` matches `me`, which could:
+// Matches returns whether `s` matches `this`, which could:
 //
 // - begin and end with an asterisk `*`  wildcard: "contains" semantics
 //
@@ -64,19 +64,19 @@ func (me Pat) FirstMatch(strs ...string) string {
 //
 // - only consist of an asterisk `*` wildcard: always matches any `s`
 //
-// - otherwise: matches if `s == me`.
-func (me Pat) Match(s string) bool {
-	l := len(me)
-	if l == 0 || me == "*" {
+// - otherwise: matches if `s == this`.
+func (this Pat) Match(s string) bool {
+	l := len(this)
+	if l == 0 || this == "*" {
 		return true
 	}
-	prefix, suffix := me[0] == '*', me[l-1] == '*'
+	prefix, suffix := this[0] == '*', this[l-1] == '*'
 	if prefix && suffix {
-		return strings.Contains(s, string(me)[1:l-1])
+		return strings.Contains(s, string(this)[1:l-1])
 	} else if prefix {
-		return strings.HasSuffix(s, string(me)[1:])
+		return strings.HasSuffix(s, string(this)[1:])
 	} else if suffix {
-		return strings.HasPrefix(s, string(me)[:l-1])
+		return strings.HasPrefix(s, string(this)[:l-1])
 	}
-	return s == string(me)
+	return s == string(this)
 }

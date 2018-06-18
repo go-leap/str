@@ -406,25 +406,25 @@ Buf wraps `bytes.Buffer`.
 #### func (*Buf) Write
 
 ```go
-func (me *Buf) Write(s string) (int, error)
+func (this *Buf) Write(s string) (int, error)
 ```
 
 #### func (*Buf) Writef
 
 ```go
-func (me *Buf) Writef(s string, args ...interface{}) (int, error)
+func (this *Buf) Writef(s string, args ...interface{}) (int, error)
 ```
 
 #### func (*Buf) Writeln
 
 ```go
-func (me *Buf) Writeln(s string) (int, error)
+func (this *Buf) Writeln(s string) (int, error)
 ```
 
 #### func (*Buf) Writelnf
 
 ```go
-func (me *Buf) Writelnf(s string, args ...interface{}) (int, error)
+func (this *Buf) Writelnf(s string, args ...interface{}) (int, error)
 ```
 
 #### type Pat
@@ -442,23 +442,23 @@ etc. will deliver instead.
 #### func (Pat) AllMatch
 
 ```go
-func (me Pat) AllMatch(strs ...string) bool
+func (this Pat) AllMatch(strs ...string) bool
 ```
-AllMatch returns whether all the specified `strs` satisfy `me.Match`.
+AllMatch returns whether all the specified `strs` satisfy `this.Match`.
 
 #### func (Pat) FirstMatch
 
 ```go
-func (me Pat) FirstMatch(strs ...string) string
+func (this Pat) FirstMatch(strs ...string) string
 ```
-FirstMatch returns the first in `strs` that `me.Match`es, or `""`.
+FirstMatch returns the first in `strs` that `this.Match`es, or `""`.
 
 #### func (Pat) Match
 
 ```go
-func (me Pat) Match(s string) bool
+func (this Pat) Match(s string) bool
 ```
-Matches returns whether `s` matches `me`, which could:
+Matches returns whether `s` matches `this`, which could:
 
 - begin and end with an asterisk `*` wildcard: "contains" semantics
 
@@ -468,7 +468,7 @@ Matches returns whether `s` matches `me`, which could:
 
 - only consist of an asterisk `*` wildcard: always matches any `s`
 
-- otherwise: matches if `s == me`.
+- otherwise: matches if `s == this`.
 
 #### type Pats
 
@@ -481,23 +481,23 @@ Pats is a slice of `Pat`s.
 #### func (*Pats) Add
 
 ```go
-func (me *Pats) Add(pats ...Pat)
+func (this *Pats) Add(pats ...Pat)
 ```
-Add `append`s all the specified `pats` to `me`.
+Add `append`s all the specified `pats` to `this`.
 
 #### func (Pats) FirstMatch
 
 ```go
-func (me Pats) FirstMatch(s string) Pat
+func (this Pats) FirstMatch(s string) Pat
 ```
-FirstMatch returns the first `Pat` in `me` to `Match(s)`, or `""`.
+FirstMatch returns the first `Pat` in `this` to `Match(s)`, or `""`.
 
 #### func (Pats) NoMatch
 
 ```go
-func (me Pats) NoMatch(s string) bool
+func (this Pats) NoMatch(s string) bool
 ```
-NoMatch returns whether not a single `Pat` in `me` does `Match(s)`.
+NoMatch returns whether not a single `Pat` in `this` does `Match(s)`.
 
 #### type Writer
 
