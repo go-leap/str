@@ -247,6 +247,38 @@ func FirstOf(strs ...string) (s string) {
 	return
 }
 
+// ForEachOccurrenceInBetween finds occurrences between two separators and
+// calls `modify` for each of them, changing that occurrence in `s` to its
+// return value; finally it returns `s` with all applied modifications.
+//
+// For example, it could be used to modify all hrefs in markdown links using simply
+// the separators "](" and ")" --- `modify` would receive each inner href value.
+func ForEachOccurrenceInBetween(s string, subStrStart string, subStrEnd string, modify func(string) string) string {
+	var startfrom int
+	for startfrom < len(s) {
+		contstr := s[startfrom:]
+		pos := strings.Index(contstr, subStrStart)
+		if pos < 0 {
+			break
+		}
+		pos += len(subStrStart)
+		pos2 := strings.Index(contstr[pos:], subStrEnd)
+		if pos2 < 0 {
+			break
+		}
+		pos2 += pos
+
+		culprit := contstr[pos:pos2]
+		if maybe := modify(culprit); maybe != culprit {
+			s = s[:startfrom] + contstr[:pos] + maybe + contstr[pos2:]
+			startfrom += pos + len(maybe) + len(subStrEnd)
+		} else {
+			startfrom += pos2 + len(subStrEnd)
+		}
+	}
+	return s
+}
+
 // IdxBMatching returns, for example, 3 for `("x[y]", ']', '[')` but 6 (not 5) for `("x[y[z]]", ']', '[')`.
 func IdxBMatching(s string, needle byte, skipOneForEachAdditionalOccurrenceOf byte) (idx int) {
 	var skipcount int

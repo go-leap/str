@@ -221,6 +221,18 @@ func FirstOf(strs ...string) (s string)
 ```
 FirstOf returns the first non-empty `s` encountered in `strs`.
 
+#### func  ForEachOccurrenceInBetween
+
+```go
+func ForEachOccurrenceInBetween(s string, subStrStart string, subStrEnd string, modify func(string) string) string
+```
+ForEachOccurrenceInBetween finds occurrences between two separators and calls
+`modify` for each of them, changing that occurrence in `s` to its return value;
+finally it returns `s` with all applied modifications.
+
+For example, it could be used to modify all hrefs in markdown links using simply
+the separators "](" and ")" --- `modify` would receive each inner href value.
+
 #### func  Has1Of
 
 ```go
