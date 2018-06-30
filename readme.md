@@ -308,7 +308,7 @@ Map applies `f` to each `string` in `strs` and returns the results in `items`.
 #### func  NamedPlaceholders
 
 ```go
-func NamedPlaceholders(begin byte, end byte) func(string, ...string) string
+func NamedPlaceholders(begin byte, end byte) (replace func(s string, namesAndValues ...string) string)
 ```
 NamedPlaceholders is a possible alternative to `fmt.Sprintf` and
 `strings.Replace` / `Replacer` for some (not all) "micro-templating" use-cases.
@@ -320,6 +320,12 @@ func Pref1Of(s string, prefixes ...string) string
 ```
 Pref1Of returns the first of the specified (non-empty) `prefixes` that `s`
 begins with, or `""`.
+
+#### func  ReplB
+
+```go
+func ReplB(s string, chars ...byte) string
+```
 
 #### func  Replace
 

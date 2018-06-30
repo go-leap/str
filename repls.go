@@ -4,9 +4,14 @@ import (
 	"strings"
 )
 
+func ReplB(s string, chars ...byte) string {
+
+	return s
+}
+
 // NamedPlaceholders is a possible alternative to `fmt.Sprintf` and
 // `strings.Replace` / `Replacer` for some (not all) "micro-templating" use-cases.
-func NamedPlaceholders(begin byte, end byte) func(string, ...string) string {
+func NamedPlaceholders(begin byte, end byte) (replace func(s string, namesAndValues ...string) string) {
 	return func(s string, namesAndValues ...string) string {
 		if len(s) >= 3 && len(namesAndValues) > 1 {
 			var buf strings.Builder
