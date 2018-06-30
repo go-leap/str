@@ -310,8 +310,16 @@ Map applies `f` to each `string` in `strs` and returns the results in `items`.
 ```go
 func NamedPlaceholders(begin byte, end byte) (replace func(s string, namesAndValues ...string) string)
 ```
-NamedPlaceholders is a possible alternative to `fmt.Sprintf` and
-`strings.Replace` / `Replacer` for some (not all) "micro-templating" use-cases.
+NamedPlaceholders is an occasionally-preferable alternative to `fmt.Sprintf` or
+`strings.Replace` / `strings.Replacer` for (fully `string`ly-typed)
+"micro-templating":
+
+```go
+
+    repl := ustr.NamedPlaceHolders('<', '>')
+    hi := repl("Hello <name>!", "name", "world")
+
+```
 
 #### func  Pref1Of
 
@@ -324,8 +332,11 @@ begins with, or `""`.
 #### func  ReplB
 
 ```go
-func ReplB(s string, chars ...byte) string
+func ReplB(s string, oldNew ...byte) string
 ```
+ReplB replaces individual `byte`s in `s` based on the given old-new pairs:
+because for some few `strings.Replace` / `strings.Replacer` scenarios, nothing
+more is needed.
 
 #### func  Replace
 
