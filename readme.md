@@ -305,6 +305,14 @@ func Map(strs []string, f func(string) string) (items []string)
 ```
 Map applies `f` to each `string` in `strs` and returns the results in `items`.
 
+#### func  NamedPlaceholders
+
+```go
+func NamedPlaceholders(begin byte, end byte) func(string, ...string) string
+```
+NamedPlaceholders is a possible alternative to `fmt.Sprintf` and
+`strings.Replace` / `Replacer` for some (not all) "micro-templating" use-cases.
+
 #### func  Pref1Of
 
 ```go
