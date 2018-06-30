@@ -187,6 +187,12 @@ func Combine(s1 string, sep string, s2 string) string
 ```
 Combine returns `s1` or `s2` or `s1 + sep + s2`, depending on their emptyness.
 
+#### func  CommonPrefix
+
+```go
+func CommonPrefix(s ...string) (pref string)
+```
+
 #### func  Drop
 
 ```go
@@ -364,9 +370,9 @@ Sans returns `strs` without the specified `excludedStrs`.
 #### func  Shortest
 
 ```go
-func Shortest(strs []string) (s string)
+func Shortest(strs []string) (shortest string)
 ```
-Shortest returns the shortest `s` in `strs`.
+Shortest returns the `shortest` in `strs`.
 
 #### func  Skip
 

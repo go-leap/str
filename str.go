@@ -192,6 +192,28 @@ func Combine(s1 string, sep string, s2 string) string {
 	return s2
 }
 
+func CommonPrefix(s ...string) (pref string) {
+	if len(s) == 1 {
+		return s[0]
+	}
+	if len(s) > 1 {
+		var preflen int
+		for cont, others, i := true, s[1:], 0; cont && i < len(s[0]); i++ {
+			for j := range others {
+				if i >= len(others[j]) || others[j][i] != s[0][i] {
+					cont = false
+					break
+				}
+			}
+			if !cont {
+				preflen = i
+			}
+		}
+		pref = s[0][:preflen]
+	}
+	return
+}
+
 // Drop is a lower-level, byte-based TrimRight.
 func Drop(s string, r byte) string {
 	end := len(s)
@@ -417,11 +439,13 @@ func Skip(s string, r byte) string {
 	return s[skip:]
 }
 
-// Shortest returns the shortest `s` in `strs`.
-func Shortest(strs []string) (s string) {
-	for _, str := range strs {
-		if s == "" || len(str) < len(s) {
-			s = str
+// Shortest returns the `shortest` in `strs`.
+func Shortest(strs []string) (shortest string) {
+	for i := range strs {
+		if shortest == "" || len(strs[i]) < len(shortest) {
+			if shortest = strs[i]; shortest == "" {
+				break
+			}
 		}
 	}
 	return
