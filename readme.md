@@ -172,6 +172,12 @@ func CaseLo(s string, runeIndex int) string
 Case returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be
 lower-case.
 
+#### func  CaseSnake
+
+```go
+func CaseSnake(s string) string
+```
+
 #### func  CaseUp
 
 ```go

@@ -182,6 +182,38 @@ func CaseLo(s string, runeIndex int) string { return Rune(s, runeIndex, unicode.
 // Case returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be upper-case.
 func CaseUp(s string, runeIndex int) string { return Rune(s, runeIndex, unicode.ToUpper) }
 
+func CaseSnake(s string) string {
+	var buf strings.Builder
+	var start int
+	needcase := true
+	rewrite := func(pos int, r rune, to func(rune) rune) {
+		if start < pos {
+			buf.WriteString(s[start:pos])
+		}
+		buf.WriteRune(to(r))
+		start = pos + utf8.RuneLen(r)
+	}
+	for pos, r := range s {
+		if !unicode.IsLetter(r) {
+			needcase = true
+		} else if !needcase && unicode.IsUpper(r) {
+			rewrite(pos, r, unicode.ToLower)
+		} else {
+			if needcase && unicode.IsLower(r) {
+				rewrite(pos, r, unicode.ToUpper)
+			}
+			needcase = false
+		}
+	}
+	if start > 0 {
+		buf.WriteString(s[start:])
+	}
+	if buf.Len() > 0 {
+		return buf.String()
+	}
+	return s
+}
+
 // Combine returns `s1` or `s2` or `s1 + sep + s2`, depending on their emptyness.
 func Combine(s1 string, sep string, s2 string) string {
 	if h1 := s1 != ""; h1 && s2 != "" {
