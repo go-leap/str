@@ -265,6 +265,13 @@ func IdxRMatching(s string, needle rune, skipOneForEachAdditionalOccurrenceOf ru
 IdxRMatching returns, for example, 3 for `("x[y]", ']', '[')` but 6 (not 5) for
 `("x[y[z]]", ']', '[')`.
 
+#### func  If
+
+```go
+func If(check bool, then string, otherwise string) string
+```
+If returns `then` if `check`, else `otherwise`.
+
 #### func  In
 
 ```go
@@ -314,7 +321,7 @@ Map applies `f` to each `string` in `strs` and returns the results in `items`.
 #### func  NamedPlaceholders
 
 ```go
-func NamedPlaceholders(begin byte, end byte) (replace func(s string, namesAndValues ...string) string)
+func NamedPlaceholders(begin byte, end byte) func(string, ...string) string
 ```
 NamedPlaceholders is an occasionally-preferable alternative to `fmt.Sprintf` or
 `strings.Replace` / `strings.Replacer` for (fully `string`ly-typed)
@@ -322,10 +329,16 @@ NamedPlaceholders is an occasionally-preferable alternative to `fmt.Sprintf` or
 
 ```go
 
-    repl := ustr.NamedPlaceHolders('<', '>')
-    hi := repl("Hello <name>!", "name", "world")
+    repl := ustr.NamedPlaceHolders('(', ']')
+    hi := repl("Hello (name]!", "name", "world")
 
 ```
+
+The delimiter `begin` and `end` chars may well be equal, if so desired. When
+called, the returned `func` traverses its `string` arg exactly once, ie. it does
+not re-process the replacements or its final result. It searches through its
+name-value-pairs once per fully-delimited-substring. Any of those occurrences
+not found in its name-value-pairs are left in-place including the delimiters.
 
 #### func  Pref1Of
 

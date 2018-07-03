@@ -32,10 +32,17 @@ func ReplB(s string, oldNew ...byte) string {
 // `strings.Replace` / `strings.Replacer` for (fully `string`ly-typed) "micro-templating":
 //
 // ```go
-//  repl := ustr.NamedPlaceHolders('<', '>')
-//  hi := repl("Hello <name>!", "name", "world")
+//  repl := ustr.NamedPlaceHolders('(', ']')
+//  hi := repl("Hello (name]!", "name", "world")
 // ```
-func NamedPlaceholders(begin byte, end byte) (replace func(s string, namesAndValues ...string) string) {
+//
+//
+// The delimiter `begin` and `end` chars may well be equal, if so desired. When
+// called, the returned `func` traverses its `string` arg exactly  once, ie. it
+// does not re-process the replacements or its final result. It searches through
+// its name-value-pairs once per fully-delimited-substring. Any of those occurrences
+// not found in its name-value-pairs are left in-place including the delimiters.
+func NamedPlaceholders(begin byte, end byte) func(string, ...string) string {
 	return func(s string, namesAndValues ...string) string {
 		if len(s) >= 3 && len(namesAndValues) > 1 {
 			var buf strings.Builder

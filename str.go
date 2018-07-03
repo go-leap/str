@@ -505,6 +505,14 @@ func ToUi64(s string, base int, fallback uint64) uint64 {
 	return fallback
 }
 
+// If returns `then` if `check`, else `otherwise`.
+func If(check bool, then string, otherwise string) string {
+	if check {
+		return then
+	}
+	return otherwise
+}
+
 // Until is a convenience short-hand for `BeforeFirst(s, needle, s)`.
 func Until(s string, needle string) string {
 	return BeforeFirst(s, needle, s)
