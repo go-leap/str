@@ -232,7 +232,7 @@ func CommonPrefix(s ...string) (pref string) {
 		var preflen int
 		for cont, others, i := true, s[1:], 0; cont && i < len(s[0]); i++ {
 			for j := range others {
-				if i >= len(others[j]) || others[j][i] != s[0][i] {
+				if len(others[j]) < i || others[j][i] != s[0][i] {
 					cont = false
 					break
 				}
