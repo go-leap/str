@@ -393,6 +393,12 @@ func Shortest(strs []string) (shortest string)
 ```
 Shortest returns the `shortest` in `strs`.
 
+#### func  ShortestAndLongest
+
+```go
+func ShortestAndLongest(s ...string) (lenShortest int, lenLongest int)
+```
+
 #### func  Skip
 
 ```go

@@ -483,6 +483,23 @@ func Shortest(strs []string) (shortest string) {
 	return
 }
 
+func ShortestAndLongest(s ...string) (lenShortest int, lenLongest int) {
+	lenShortest = -1
+	for i := range s {
+		l := len(s[i])
+		if l > lenLongest {
+			lenLongest = l
+		}
+		if lenShortest == -1 || l < lenShortest {
+			lenShortest = l
+		}
+	}
+	if lenShortest == -1 {
+		lenShortest = 0
+	}
+	return
+}
+
 // Split returns an empty slice if `s` is emtpy, otherwise calls `strings.Split`.
 func Split(s string, sep string) (strs []string) {
 	if len(s) != 0 {
