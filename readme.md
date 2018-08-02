@@ -529,7 +529,7 @@ FirstMatch returns the first in `strs` that `this.Match`es, or `""`.
 ```go
 func (this Pat) Match(s string) bool
 ```
-Matches returns whether `s` matches `this`, which could:
+Match returns whether `s` matches `this`, which could:
 
 - begin and end with an asterisk `*` wildcard: "contains" semantics
 

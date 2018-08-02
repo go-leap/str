@@ -54,7 +54,7 @@ func (this Pat) FirstMatch(strs ...string) string {
 	return ""
 }
 
-// Matches returns whether `s` matches `this`, which could:
+// Match returns whether `s` matches `this`, which could:
 //
 // - begin and end with an asterisk `*`  wildcard: "contains" semantics
 //
