@@ -16,18 +16,18 @@ type Buf struct {
 	bytes.Buffer
 }
 
-func (this *Buf) Write(s string) (int, error) {
-	return this.Buffer.WriteString(s)
+func (me *Buf) Write(s string) (int, error) {
+	return me.Buffer.WriteString(s)
 }
 
-func (this *Buf) Writef(s string, args ...interface{}) (int, error) {
-	return this.WriteString(fmt.Sprintf(s, args...))
+func (me *Buf) Writef(s string, args ...interface{}) (int, error) {
+	return me.WriteString(fmt.Sprintf(s, args...))
 }
 
-func (this *Buf) Writeln(s string) (int, error) {
-	return this.WriteString(s + "\n")
+func (me *Buf) Writeln(s string) (int, error) {
+	return me.WriteString(s + "\n")
 }
 
-func (this *Buf) Writelnf(s string, args ...interface{}) (int, error) {
-	return this.WriteString(fmt.Sprintf(s, args...) + "\n")
+func (me *Buf) Writelnf(s string, args ...interface{}) (int, error) {
+	return me.WriteString(fmt.Sprintf(s, args...) + "\n")
 }
