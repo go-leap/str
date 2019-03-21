@@ -108,6 +108,14 @@ func BeforeFirst(s string, needle string, otherwise string) string
 BeforeFirst returns the prefix of `s` up to the first occurrence of `needle`, or
 `otherwise` if no match.
 
+#### func  BeforeFirstSpace
+
+```go
+func BeforeFirstSpace(s string, otherwise string) string
+```
+BeforeFirstSpace returns the prefix of `s` up to the first occurrence of a
+`rune` satisfying `unicode.IsSpace`, or `otherwise` if no match.
+
 #### func  BeforeLast
 
 ```go

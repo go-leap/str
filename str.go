@@ -110,6 +110,14 @@ func BeforeFirst(s string, needle string, otherwise string) string {
 	return otherwise
 }
 
+// BeforeFirstSpace returns the prefix of `s` up to the first occurrence of a `rune` satisfying `unicode.IsSpace`, or `otherwise` if no match.
+func BeforeFirstSpace(s string, otherwise string) string {
+	if i := strings.IndexFunc(s, unicode.IsSpace); i >= 0 {
+		return s[:i]
+	}
+	return otherwise
+}
+
 // BeforeLast returns the prefix of `s` up to the last occurrence of `needle`, or `otherwise` if no match.
 func BeforeLast(s string, needle string, otherwise string) string {
 	if i := strings.LastIndex(s, needle); i >= 0 {
