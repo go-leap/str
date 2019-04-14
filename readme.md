@@ -58,9 +58,6 @@ var (
 	// Suff aliases `strings.HasSuffix` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Suff = strings.HasSuffix
 
-	// Times aliases `strings.Repeat` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
-	Times = strings.Repeat
-
 	// Trim aliases `strings.TrimSpace` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Trim = strings.TrimSpace
 
@@ -362,6 +359,12 @@ func Pref1Of(s string, prefixes ...string) string
 Pref1Of returns the first of the specified (non-empty) `prefixes` that `s`
 begins with, or `""`.
 
+#### func  Repeat
+
+```go
+func Repeat(s string, n int) (str []byte)
+```
+
 #### func  ReplB
 
 ```go
@@ -429,6 +432,12 @@ func SplitByWhitespaceAndReJoinBySpace(s string) string
 SplitByWhitespaceAndJoin returns `s` with all occurrences of multiple subsequent
 `unicode.IsSpace` runes in a row collapsed into one single white-space (`" "`)
 rune.
+
+#### func  Times
+
+```go
+func Times(s string, n int) string
+```
 
 #### func  ToBool
 

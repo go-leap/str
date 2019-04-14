@@ -61,9 +61,6 @@ var (
 	// Suff aliases `strings.HasSuffix` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Suff = strings.HasSuffix
 
-	// Times aliases `strings.Repeat` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
-	Times = strings.Repeat
-
 	// Trim aliases `strings.TrimSpace` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strings` import.
 	Trim = strings.TrimSpace
 
@@ -573,4 +570,23 @@ func If(check bool, then string, otherwise string) string {
 // Until is a convenience short-hand for `BeforeFirst(s, needle, s)`.
 func Until(s string, needle string) string {
 	return BeforeFirst(s, needle, s)
+}
+
+func Times(s string, n int) string {
+	return string(Repeat(s, n))
+}
+
+func Repeat(s string, n int) (str []byte) {
+	if len(s) == 1 {
+		str = make([]byte, n)
+		for i := range str {
+			str[i] = s[0]
+		}
+	} else if len(s) != 0 {
+		str = make([]byte, 0, len(s)*n)
+		for i := 0; i < n; i++ {
+			str = append(str, s...)
+		}
+	}
+	return
 }
