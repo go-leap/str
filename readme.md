@@ -329,6 +329,12 @@ func Map(strs []string, f func(string) string) (items []string)
 ```
 Map applies `f` to each `string` in `strs` and returns the results in `items`.
 
+#### func  Merge
+
+```go
+func Merge(s []string, with []string, excludeEmpties bool) []string
+```
+
 #### func  NamedPlaceholders
 
 ```go
@@ -420,9 +426,15 @@ Skip is a lower-level, byte-based TrimLeft.
 #### func  Split
 
 ```go
-func Split(s string, sep string) (strs []string)
+func Split(s string, sep string) (splits []string)
 ```
 Split returns an empty slice if `s` is emtpy, otherwise calls `strings.Split`.
+
+#### func  SplitB
+
+```go
+func SplitB(s string, sep byte, initialCap int) (splits []string)
+```
 
 #### func  SplitByWhitespaceAndReJoinBySpace
 
@@ -432,6 +444,12 @@ func SplitByWhitespaceAndReJoinBySpace(s string) string
 SplitByWhitespaceAndJoin returns `s` with all occurrences of multiple subsequent
 `unicode.IsSpace` runes in a row collapsed into one single white-space (`" "`)
 rune.
+
+#### func  SplitR
+
+```go
+func SplitR(s string, sep rune, initialCap int) (splits []string)
+```
 
 #### func  Times
 

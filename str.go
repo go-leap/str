@@ -433,6 +433,23 @@ func Map(strs []string, f func(string) string) (items []string) {
 	return
 }
 
+func Merge(s []string, with []string, excludeEmpties bool) []string {
+	for i := range s {
+		if len(s[i]) > 0 || !excludeEmpties {
+			var have bool
+			for j := range with {
+				if have = with[j] == s[i]; have {
+					break
+				}
+			}
+			if !have {
+				with = append(with, s[i])
+			}
+		}
+	}
+	return with
+}
+
 // Pref1Of returns the first of the specified (non-empty) `prefixes` that `s` begins with, or `""`.
 func Pref1Of(s string, prefixes ...string) string {
 	for _, prefix := range prefixes {
@@ -506,9 +523,50 @@ func ShortestAndLongest(s ...string) (lenShortest int, lenLongest int) {
 }
 
 // Split returns an empty slice if `s` is emtpy, otherwise calls `strings.Split`.
-func Split(s string, sep string) (strs []string) {
+func Split(s string, sep string) (splits []string) {
 	if len(s) != 0 {
-		strs = strings.Split(s, sep)
+		splits = strings.Split(s, sep)
+	}
+	return
+}
+
+func SplitB(s string, sep byte, initialCap int) (splits []string) {
+	if initialCap > 0 {
+		splits = make([]string, 0, initialCap)
+	}
+	var startfrom int
+	for i := 0; i < len(s); i++ {
+		if s[i] == sep {
+			splits = append(splits, s[startfrom:i])
+			startfrom = i + 1
+		}
+	}
+	if startfrom > 0 {
+		splits = append(splits, s[startfrom:])
+	} else if len(s) > 0 {
+		splits = []string{s}
+	}
+	return
+}
+
+func SplitR(s string, sep rune, initialCap int) (splits []string) {
+	if initialCap > 0 {
+		splits = make([]string, 0, initialCap)
+	}
+	var startfrom int
+	var lastwasmatch bool
+	for i, r := range s {
+		if lastwasmatch {
+			startfrom = i
+		}
+		if lastwasmatch = (r == sep); lastwasmatch {
+			splits = append(splits, s[startfrom:i])
+		}
+	}
+	if startfrom > 0 {
+		splits = append(splits, s[startfrom:])
+	} else if len(s) > 0 {
+		splits = append(splits, s)
 	}
 	return
 }
