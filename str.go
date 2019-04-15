@@ -229,17 +229,6 @@ func Combine(s1 string, sep string, s2 string) string {
 	return s2
 }
 
-func CountPrefixRunes(s string, pref rune) (count int) {
-	for _, r := range s {
-		if r != pref {
-			break
-		} else {
-			count++
-		}
-	}
-	return
-}
-
 func CommonPrefix(s ...string) (pref string) {
 	if len(s) == 1 {
 		return s[0]

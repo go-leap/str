@@ -204,12 +204,6 @@ Combine returns `s1` or `s2` or `s1 + sep + s2`, depending on their emptyness.
 func CommonPrefix(s ...string) (pref string)
 ```
 
-#### func  CountPrefixRunes
-
-```go
-func CountPrefixRunes(s string, pref rune) (count int)
-```
-
 #### func  Drop
 
 ```go
