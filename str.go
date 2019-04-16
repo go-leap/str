@@ -433,9 +433,17 @@ func Map(strs []string, f func(string) string) (items []string) {
 	return
 }
 
-func Merge(s []string, with []string, excludeEmpties bool) []string {
+func Merge(s []string, with []string, dropIf func(string) bool) []string {
+	if dropIf != nil {
+		for i := 0; i < len(with); i++ {
+			if dropIf(with[i]) {
+				with = append(with[:i], with[i+1:]...)
+				i--
+			}
+		}
+	}
 	for i := range s {
-		if len(s[i]) > 0 || !excludeEmpties {
+		if dropIf == nil || !dropIf(s[i]) {
 			var have bool
 			for j := range with {
 				if have = with[j] == s[i]; have {

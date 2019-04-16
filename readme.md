@@ -332,7 +332,7 @@ Map applies `f` to each `string` in `strs` and returns the results in `items`.
 #### func  Merge
 
 ```go
-func Merge(s []string, with []string, excludeEmpties bool) []string
+func Merge(s []string, with []string, dropIf func(string) bool) []string
 ```
 
 #### func  NamedPlaceholders
