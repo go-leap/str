@@ -2,6 +2,7 @@ package ustr
 
 import (
 	"fmt"
+	"github.com/go-leap/std"
 	"math"
 	"strconv"
 	"strings"
@@ -374,6 +375,17 @@ func IdxRMatching(s string, needle rune, skipOneForEachAdditionalOccurrenceOf ru
 // Int64 aliases `strconv.FormatInt(i, 10)` — merely a handy short-hand during rapid iteration in non-critical code-paths that already do import `ustr` to not have to repeatedly pull in and out the extra `strconv` import.
 func Int64(i int64) string {
 	return strconv.FormatInt(i, 10)
+}
+
+func Uint64s(joinBy byte, values []uint64) string {
+	var b ustd.BytesWriter
+	for i := range values {
+		if i > 0 {
+			b.WriteByte(joinBy)
+		}
+		b.WriteString(strconv.FormatUint(values[i], 16))
+	}
+	return string(b.Data)
 }
 
 // Has1Of returns whether `s` contains any of the specified `subStrings`.

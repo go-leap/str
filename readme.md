@@ -492,6 +492,12 @@ func ToUi64(s string, base int, fallback uint64) uint64
 ```
 ToUi64 returns either the `uint64` denoted by `s`, or `fallback`.
 
+#### func  Uint64s
+
+```go
+func Uint64s(joinBy byte, values []uint64) string
+```
+
 #### func  Until
 
 ```go
@@ -503,34 +509,40 @@ Until is a convenience short-hand for `BeforeFirst(s, needle, s)`.
 
 ```go
 type Buf struct {
-	bytes.Buffer
+	ustd.BytesWriter
 }
 ```
 
 Buf wraps `bytes.Buffer`.
 
+#### func (*Buf) String
+
+```go
+func (me *Buf) String() string
+```
+
 #### func (*Buf) Write
 
 ```go
-func (me *Buf) Write(s string) (int, error)
+func (me *Buf) Write(s string)
 ```
 
 #### func (*Buf) Writef
 
 ```go
-func (me *Buf) Writef(s string, args ...interface{}) (int, error)
+func (me *Buf) Writef(s string, args ...interface{})
 ```
 
 #### func (*Buf) Writeln
 
 ```go
-func (me *Buf) Writeln(s string) (int, error)
+func (me *Buf) Writeln(s string)
 ```
 
 #### func (*Buf) Writelnf
 
 ```go
-func (me *Buf) Writelnf(s string, args ...interface{}) (int, error)
+func (me *Buf) Writelnf(s string, args ...interface{})
 ```
 
 #### type Pat
