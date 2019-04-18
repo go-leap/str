@@ -357,6 +357,12 @@ not re-process the replacements or its final result. It searches through its
 name-value-pairs once per fully-delimited-substring. Any of those occurrences
 not found in its name-value-pairs are left in-place including the delimiters.
 
+#### func  Plu
+
+```go
+func Plu(n int, s string) (r string)
+```
+
 #### func  Pref1Of
 
 ```go

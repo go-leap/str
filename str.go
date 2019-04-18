@@ -433,6 +433,14 @@ func Longest(strs []string) (s string) {
 	return
 }
 
+func Plu(n int, s string) (r string) {
+	r = Int(n) + " " + s
+	if n != 1 {
+		r += "s"
+	}
+	return
+}
+
 // Map applies `f` to each `string` in `strs` and returns the results in `items`.
 func Map(strs []string, f func(string) string) (items []string) {
 	if f == nil {
