@@ -307,6 +307,12 @@ func IsLower(s string) bool
 IsLower returns whether all `unicode.IsLetter` runes in `s` satisfy
 `unicode.IsLower`.
 
+#### func  IsRepeat
+
+```go
+func IsRepeat(s string) bool
+```
+
 #### func  IsUpper
 
 ```go

@@ -423,6 +423,21 @@ func IsUpper(s string) bool {
 	return true
 }
 
+func IsRepeat(s string) bool {
+	if len(s) > 0 {
+		var first rune
+		for i, r := range s {
+			if i == 0 {
+				first = r
+			} else if r != first {
+				return false
+			}
+		}
+		return true
+	}
+	return false
+}
+
 // Longest returns the longest `s` in `strs`.
 func Longest(strs []string) (s string) {
 	for _, str := range strs {
