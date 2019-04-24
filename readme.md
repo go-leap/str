@@ -321,6 +321,12 @@ func IsUpper(s string) bool
 IsUpper returns whether all `unicode.IsLetter` runes in `s` satisfy
 `unicode.IsUpper`.
 
+#### func  JoinB
+
+```go
+func JoinB(nonEmpty []string, b byte) string
+```
+
 #### func  Longest
 
 ```go

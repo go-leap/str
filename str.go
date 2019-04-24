@@ -377,6 +377,16 @@ func Int64(i int64) string {
 	return strconv.FormatInt(i, 10)
 }
 
+func JoinB(nonEmpty []string, b byte) string {
+	buf := Buf{BytesWriter: ustd.BytesWriter{Data: make([]byte, 0, len(nonEmpty)*len(nonEmpty[0]))}}
+	for i := range nonEmpty {
+		buf.WriteByte(b)
+		buf.WriteString(nonEmpty[i])
+	}
+	buf.Data = buf.Data[1:]
+	return buf.String()
+}
+
 func Uint64s(joinBy byte, values []uint64) string {
 	var b ustd.BytesWriter
 	for i := range values {
