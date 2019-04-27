@@ -390,12 +390,10 @@ func JoinB(nonEmpty []string, b byte) string {
 func Uint64s(joinBy byte, values []uint64) string {
 	var b ustd.BytesWriter
 	for i := range values {
-		if i > 0 {
-			b.WriteByte(joinBy)
-		}
+		b.WriteByte(joinBy)
 		b.WriteString(strconv.FormatUint(values[i], 16))
 	}
-	return string(b.Data)
+	return string(b.Data[1:])
 }
 
 // Has1Of returns whether `s` contains any of the specified `subStrings`.
