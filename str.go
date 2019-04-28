@@ -132,6 +132,44 @@ func BeginsLower(s string) bool {
 	return false
 }
 
+func Begins(s string, ok func(rune) bool) bool {
+	for _, r := range s {
+		return ok(r)
+	}
+	return false
+}
+
+func HasAny(s string, ok func(rune) bool) bool {
+	for _, r := range s {
+		if ok(r) {
+			return true
+		}
+	}
+	return false
+}
+
+func BeginsAndContainsOnly(s string, begins func(rune) bool, containsOnly ...func(rune) bool) bool {
+	for i, r := range s {
+		if i == 0 && !begins(r) {
+			return false
+		}
+		for _, ok := range containsOnly {
+			if !ok(r) {
+				return false
+			}
+		}
+	}
+	return len(s) > 0
+}
+
+// BeginsLetter returns whether the first rune in `s` satisfies `unicode.IsLetter`.
+func BeginsLetter(s string) bool {
+	for _, r := range s {
+		return unicode.IsLetter(r)
+	}
+	return false
+}
+
 // BeginsUpper returns whether the first rune in `s` satisfies both `unicode.IsLetter` and `unicode.IsUpper`.
 func BeginsUpper(s string) bool {
 	for _, r := range s {

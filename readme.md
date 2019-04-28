@@ -121,6 +121,25 @@ func BeforeLast(s string, needle string, otherwise string) string
 BeforeLast returns the prefix of `s` up to the last occurrence of `needle`, or
 `otherwise` if no match.
 
+#### func  Begins
+
+```go
+func Begins(s string, ok func(rune) bool) bool
+```
+
+#### func  BeginsAndContainsOnly
+
+```go
+func BeginsAndContainsOnly(s string, begins func(rune) bool, containsOnly ...func(rune) bool) bool
+```
+
+#### func  BeginsLetter
+
+```go
+func BeginsLetter(s string) bool
+```
+BeginsLetter returns whether the first rune in `s` satisfies `unicode.IsLetter`.
+
 #### func  BeginsLower
 
 ```go
@@ -259,6 +278,12 @@ the separators "](" and ")" --- `modify` would receive each inner href value.
 func Has1Of(s string, subStrings ...string) bool
 ```
 Has1Of returns whether `s` contains any of the specified `subStrings`.
+
+#### func  HasAny
+
+```go
+func HasAny(s string, ok func(rune) bool) bool
+```
 
 #### func  IdxBMatching
 
