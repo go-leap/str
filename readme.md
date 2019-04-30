@@ -335,7 +335,7 @@ IsLower returns whether all `unicode.IsLetter` runes in `s` satisfy
 #### func  IsRepeat
 
 ```go
-func IsRepeat(s string) bool
+func IsRepeat(s string, first rune) bool
 ```
 
 #### func  IsUpper

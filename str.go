@@ -469,11 +469,10 @@ func IsUpper(s string) bool {
 	return true
 }
 
-func IsRepeat(s string) bool {
+func IsRepeat(s string, first rune) bool {
 	if len(s) > 0 {
-		var first rune
 		for i, r := range s {
-			if i == 0 {
+			if i == 0 && first == 0 {
 				first = r
 			} else if r != first {
 				return false
