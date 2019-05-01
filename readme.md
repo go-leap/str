@@ -349,7 +349,7 @@ IsUpper returns whether all `unicode.IsLetter` runes in `s` satisfy
 #### func  JoinB
 
 ```go
-func JoinB(nonEmpty []string, b byte) string
+func JoinB(s []string, b byte) string
 ```
 
 #### func  Longest

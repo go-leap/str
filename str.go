@@ -415,11 +415,16 @@ func Int64(i int64) string {
 	return strconv.FormatInt(i, 10)
 }
 
-func JoinB(nonEmpty []string, b byte) string {
-	buf := Buf{BytesWriter: ustd.BytesWriter{Data: make([]byte, 0, len(nonEmpty)*len(nonEmpty[0]))}}
-	for i := range nonEmpty {
+func JoinB(s []string, b byte) string {
+	if len(s) == 0 {
+		return ""
+	} else if len(s) == 1 {
+		return s[0]
+	}
+	buf := Buf{BytesWriter: ustd.BytesWriter{Data: make([]byte, 0, len(s)*len(s[0]))}}
+	for i := range s {
 		buf.WriteByte(b)
-		buf.WriteString(nonEmpty[i])
+		buf.WriteString(s[i])
 	}
 	buf.Data = buf.Data[1:]
 	return buf.String()
