@@ -741,3 +741,11 @@ func Repeat(s string, n int) (str []byte) {
 	}
 	return
 }
+
+func RepeatB(b byte, n int) (s []byte) {
+	s = make([]byte, n)
+	for i := range s {
+		s[i] = b
+	}
+	return
+}

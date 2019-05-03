@@ -414,6 +414,12 @@ begins with, or `""`.
 func Repeat(s string, n int) (str []byte)
 ```
 
+#### func  RepeatB
+
+```go
+func RepeatB(b byte, n int) (s []byte)
+```
+
 #### func  ReplB
 
 ```go
