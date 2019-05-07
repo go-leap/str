@@ -139,6 +139,26 @@ func Begins(s string, ok func(rune) bool) bool {
 	return false
 }
 
+func HasAnyOf(s string, anyOneOf ...byte) bool {
+	for _, b := range anyOneOf {
+		if strings.IndexByte(s, b) >= 0 {
+			return true
+		}
+	}
+	return false
+}
+
+func IsLen1And(s string, anyOneOf ...byte) bool {
+	if len(s) == 1 {
+		for _, b := range anyOneOf {
+			if s[0] == b {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 func HasAny(s string, ok func(rune) bool) bool {
 	for _, r := range s {
 		if ok(r) {

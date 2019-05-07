@@ -285,6 +285,12 @@ Has1Of returns whether `s` contains any of the specified `subStrings`.
 func HasAny(s string, ok func(rune) bool) bool
 ```
 
+#### func  HasAnyOf
+
+```go
+func HasAnyOf(s string, anyOneOf ...byte) bool
+```
+
 #### func  IdxBMatching
 
 ```go
@@ -323,6 +329,12 @@ func Int64(i int64) string
 Int64 aliases `strconv.FormatInt(i, 10)` — merely a handy short-hand during
 rapid iteration in non-critical code-paths that already do import `ustr` to not
 have to repeatedly pull in and out the extra `strconv` import.
+
+#### func  IsLen1And
+
+```go
+func IsLen1And(s string, anyOneOf ...byte) bool
+```
 
 #### func  IsLower
 
