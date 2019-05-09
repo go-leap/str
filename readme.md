@@ -477,6 +477,13 @@ Shortest returns the `shortest` in `strs`.
 func ShortestAndLongest(s ...string) (lenShortest int, lenLongest int)
 ```
 
+#### func  Similes
+
+```go
+func Similes(s string, candidates ...string) (sim []string)
+```
+Similes for when Levenshtein seems overkill.. cheap & naive but handy
+
 #### func  Skip
 
 ```go

@@ -148,6 +148,24 @@ func HasAnyOf(s string, anyOneOf ...byte) bool {
 	return false
 }
 
+var replDitchVowels = Repl("a", "", "e", "", "i", "", "o", "", "u", "", "ä", "", "ö", "", "ü", "", "ï", "", "ø", "", "æ", "")
+
+// Similes for when Levenshtein seems overkill.. cheap & naive but handy
+func Similes(s string, candidates ...string) (sim []string) {
+	if len(candidates) == 0 {
+		return
+	}
+	sl := replDitchVowels.Replace(Lo(s))
+	for _, c := range candidates {
+		if len(c) >= len(s)-2 && len(c) <= len(s)+2 {
+			if cl := replDitchVowels.Replace(Lo(c)); Has(sl, cl) || Has(cl, sl) {
+				sim = append(sim, c)
+			}
+		}
+	}
+	return
+}
+
 func IsLen1And(s string, anyOneOf ...byte) bool {
 	if len(s) == 1 {
 		for _, b := range anyOneOf {
