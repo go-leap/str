@@ -484,6 +484,9 @@ func Has1Of(s string, subStrings ...string) bool {
 
 // In returns whether `strs` contains `s`.
 func In(s string, strs ...string) bool {
+	if len(strs) == 1 { // occurs often enough indeed
+		return s == strs[0]
+	}
 	for _, str := range strs {
 		if str == s {
 			return true
