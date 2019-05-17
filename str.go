@@ -140,9 +140,11 @@ func Begins(s string, ok func(rune) bool) bool {
 }
 
 func HasAnyOf(s string, anyOneOf ...byte) bool {
-	for _, b := range anyOneOf {
-		if strings.IndexByte(s, b) >= 0 {
-			return true
+	if len(s) > 0 {
+		for _, b := range anyOneOf {
+			if strings.IndexByte(s, b) >= 0 {
+				return true
+			}
 		}
 	}
 	return false
