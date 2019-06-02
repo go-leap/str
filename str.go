@@ -308,6 +308,17 @@ func Combine(s1 string, sep string, s2 string) string {
 	return s2
 }
 
+func CountPrefixRunes(s string, prefix rune) (n int) {
+	for _, r := range s {
+		if r != prefix {
+			break
+		} else {
+			n++
+		}
+	}
+	return
+}
+
 func CommonPrefix(s ...string) (pref string) {
 	if len(s) == 1 {
 		return s[0]
