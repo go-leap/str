@@ -126,12 +126,15 @@ BeforeLast returns the prefix of `s` up to the last occurrence of `needle`, or
 ```go
 func Begins(s string, ok func(rune) bool) bool
 ```
+Begins returns whether the first `rune` in `s` satisfies `ok`.
 
 #### func  BeginsAndContainsOnly
 
 ```go
 func BeginsAndContainsOnly(s string, begins func(rune) bool, containsOnly ...func(rune) bool) bool
 ```
+BeginsAndContainsOnly returns whether the first `rune` in `s` satisfies `begins`
+and all `rune`s in `s` satisfy all predicates in `containsOnly`.
 
 #### func  BeginsLetter
 
@@ -193,41 +196,44 @@ upper-case if `upper`, or lower-case if not.
 ```go
 func CaseLo(s string, runeIndex int) string
 ```
-Case returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be
-lower-case.
+CaseLo returns `s` with the rune at `runeIndex` (not byte index) guaranteed to
+be lower-case.
 
 #### func  CaseSnake
 
 ```go
 func CaseSnake(s string) string
 ```
+CaseSnake returns a snake-cased attempt at `s` (based on `unicode.IsLetter`).
 
 #### func  CaseUp
 
 ```go
 func CaseUp(s string, runeIndex int) string
 ```
-Case returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be
-upper-case.
+CaseUp returns `s` with the rune at `runeIndex` (not byte index) guaranteed to
+be upper-case.
 
 #### func  Combine
 
 ```go
 func Combine(s1 string, sep string, s2 string) string
 ```
-Combine returns `s1` or `s2` or `s1 + sep + s2`, depending on their emptyness.
+Combine returns `s1` or `s2` or `s1 + sep + s2`, depending on their emptiness.
 
 #### func  CommonPrefix
 
 ```go
 func CommonPrefix(s ...string) (pref string)
 ```
+CommonPrefix finds the prefix `pref` that all values in `s` share, if any.
 
 #### func  CountPrefixRunes
 
 ```go
 func CountPrefixRunes(s string, prefix rune) (n int)
 ```
+CountPrefixRunes returns how many occurrences of `prefix` are leading in `s`.
 
 #### func  Drop
 
@@ -278,24 +284,26 @@ finally it returns `s` with all applied modifications.
 For example, it could be used to modify all hrefs in markdown links using simply
 the separators "](" and ")" --- `modify` would receive each inner href value.
 
-#### func  Has1Of
-
-```go
-func Has1Of(s string, subStrings ...string) bool
-```
-Has1Of returns whether `s` contains any of the specified `subStrings`.
-
 #### func  HasAny
 
 ```go
 func HasAny(s string, ok func(rune) bool) bool
 ```
+HasAny returns whether any `rune` in `s` satisfies `ok`.
 
 #### func  HasAnyOf
 
 ```go
 func HasAnyOf(s string, anyOneOf ...byte) bool
 ```
+HasAnyOf returns whether `s` contains any of the `byte`s in `anyOneOf`.
+
+#### func  HasOneOf
+
+```go
+func HasOneOf(s string, subStrings ...string) bool
+```
+HasOneOf returns whether `s` contains any of the specified `subStrings`.
 
 #### func  IdxBMatching
 
@@ -341,6 +349,7 @@ have to repeatedly pull in and out the extra `strconv` import.
 ```go
 func IsLen1And(s string, anyOneOf ...byte) bool
 ```
+IsLen1And returns whether `s` is equal to any of the `byte`s in `anyOneOf`.
 
 #### func  IsLower
 
@@ -355,6 +364,8 @@ IsLower returns whether all `unicode.IsLetter` runes in `s` satisfy
 ```go
 func IsRepeat(s string, first rune) bool
 ```
+IsRepeat returns whether `s` contains nothing but one-or-more occurrences of
+`first`. If `first` is `0`, it is initialized from the first `rune` in `s`.
 
 #### func  IsUpper
 
@@ -369,6 +380,7 @@ IsUpper returns whether all `unicode.IsLetter` runes in `s` satisfy
 ```go
 func JoinB(s []string, b byte) string
 ```
+JoinB is like `strings.Join` but with a byte-length char as separator.
 
 #### func  Longest
 
@@ -389,6 +401,9 @@ Map applies `f` to each `string` in `strs` and returns the results in `items`.
 ```go
 func Merge(s []string, with []string, dropIf func(string) bool) []string
 ```
+Merge returns a slice with the items of `s` and `with`, no duplicates, no
+guaranteed ordering. If `dropIf` is given, it is called to prevent values from
+being included in the return slice.
 
 #### func  NamedPlaceholders
 
@@ -417,6 +432,10 @@ not found in its name-value-pairs are left in-place including the delimiters.
 ```go
 func Plu(n int, s string) (r string)
 ```
+Plu returns (if `s` is, say, `"foo"`) "1 foo" or "0 foos" or "2 foos", so
+appends "s" to `s` unless `n` is 1. The pluralizer is English-language-oriented
+and covers no corner-cases such as "bus" and the likes, but for simple
+command-line programs it's cheap.
 
 #### func  Pref1Of
 
@@ -431,12 +450,14 @@ begins with, or `""`.
 ```go
 func Repeat(s string, n int) (str []byte)
 ```
+Repeat is a somewhat leaner version of `strings.Repeat`.
 
 #### func  RepeatB
 
 ```go
 func RepeatB(b byte, n int) (s []byte)
 ```
+RepeatB is like `Repeat` but a single byte-length char.
 
 #### func  ReplB
 
@@ -482,6 +503,8 @@ Shortest returns the `shortest` in `strs`.
 ```go
 func ShortestAndLongest(s ...string) (lenShortest int, lenLongest int)
 ```
+ShortestAndLongest returns the length of the shortest item in `s`, as well as
+the length of the longest. Both will return as `-1` if `s` is empty.
 
 #### func  Similes
 
@@ -509,6 +532,8 @@ Split returns an empty slice if `s` is emtpy, otherwise calls `strings.Split`.
 ```go
 func SplitB(s string, sep byte, initialCap int) (splits []string)
 ```
+SplitB returns an empty slice if `s` is emtpy, otherwise it's like `Split` but
+with a `byte` separator.
 
 #### func  SplitByWhitespaceAndReJoinBySpace
 
@@ -524,12 +549,15 @@ rune.
 ```go
 func SplitR(s string, sep rune, initialCap int) (splits []string)
 ```
+SplitR returns an empty slice if `s` is emtpy, otherwise it's like `Split` but
+with a `rune` separator.
 
 #### func  Times
 
 ```go
 func Times(s string, n int) string
 ```
+Times converts `Repeat` to `string`.
 
 #### func  ToBool
 
@@ -571,6 +599,7 @@ ToUi64 returns either the `uint64` denoted by `s`, or `fallback`.
 ```go
 func Uint64s(joinBy byte, values []uint64) string
 ```
+Uint64s joins together the hex-formatted `values`.
 
 #### func  Until
 
@@ -587,37 +616,42 @@ type Buf struct {
 }
 ```
 
-Buf wraps `bytes.Buffer`.
+Buf used to wrap `bytes.Buffer`, now wraps `ustd.BytesWriter`.
 
 #### func (*Buf) String
 
 ```go
 func (me *Buf) String() string
 ```
+String returns `me.Data` converted to `string`.
 
 #### func (*Buf) Write
 
 ```go
 func (me *Buf) Write(s string)
 ```
+Write is equivalent to / short-hand for `me.BytesWriter.WriteString(s)`.
 
 #### func (*Buf) Writef
 
 ```go
 func (me *Buf) Writef(s string, args ...interface{})
 ```
+Writef uses `fmt.Sprintf`.
 
 #### func (*Buf) Writeln
 
 ```go
 func (me *Buf) Writeln(s string)
 ```
+Writeln appends `\n` to `s` then writes.
 
 #### func (*Buf) Writelnf
 
 ```go
 func (me *Buf) Writelnf(s string, args ...interface{})
 ```
+Writelnf uses `fmt.Sprintf`.
 
 #### type Pat
 
@@ -690,14 +724,3 @@ FirstMatch returns the first `Pat` in `me` to `Match(s)`, or `""`.
 func (me Pats) NoMatch(s string) bool
 ```
 NoMatch returns whether not a single `Pat` in `me` does `Match(s)`.
-
-#### type Writer
-
-```go
-type Writer interface {
-	WriteRune(rune) (int, error)
-	WriteString(string) (int, error)
-}
-```
-
-Writer is the interface that wraps the basic WriteRune and WriteString methods.

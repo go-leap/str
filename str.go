@@ -132,6 +132,7 @@ func BeginsLower(s string) bool {
 	return false
 }
 
+// Begins returns whether the first `rune` in `s` satisfies `ok`.
 func Begins(s string, ok func(rune) bool) bool {
 	for _, r := range s {
 		return ok(r)
@@ -139,6 +140,7 @@ func Begins(s string, ok func(rune) bool) bool {
 	return false
 }
 
+// HasAnyOf returns whether `s` contains any of the `byte`s in `anyOneOf`.
 func HasAnyOf(s string, anyOneOf ...byte) bool {
 	if len(s) > 0 {
 		for _, b := range anyOneOf {
@@ -168,6 +170,7 @@ func Similes(s string, candidates ...string) (sim []string) {
 	return
 }
 
+// IsLen1And returns whether `s` is equal to any of the `byte`s in `anyOneOf`.
 func IsLen1And(s string, anyOneOf ...byte) bool {
 	if len(s) == 1 {
 		for _, b := range anyOneOf {
@@ -179,6 +182,7 @@ func IsLen1And(s string, anyOneOf ...byte) bool {
 	return false
 }
 
+// HasAny returns whether any `rune` in `s` satisfies `ok`.
 func HasAny(s string, ok func(rune) bool) bool {
 	for _, r := range s {
 		if ok(r) {
@@ -188,6 +192,7 @@ func HasAny(s string, ok func(rune) bool) bool {
 	return false
 }
 
+// BeginsAndContainsOnly returns whether the first `rune` in `s` satisfies `begins` and all `rune`s in `s` satisfy all predicates in `containsOnly`.
 func BeginsAndContainsOnly(s string, begins func(rune) bool, containsOnly ...func(rune) bool) bool {
 	for i, r := range s {
 		if i == 0 && !begins(r) {
@@ -260,12 +265,13 @@ func Case(s string, runeIndex int, upper bool) string {
 	return Rune(s, runeIndex, f)
 }
 
-// Case returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be lower-case.
+// CaseLo returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be lower-case.
 func CaseLo(s string, runeIndex int) string { return Rune(s, runeIndex, unicode.ToLower) }
 
-// Case returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be upper-case.
+// CaseUp returns `s` with the rune at `runeIndex` (not byte index) guaranteed to be upper-case.
 func CaseUp(s string, runeIndex int) string { return Rune(s, runeIndex, unicode.ToUpper) }
 
+// CaseSnake returns a snake-cased attempt at `s` (based on `unicode.IsLetter`).
 func CaseSnake(s string) string {
 	var buf strings.Builder
 	var start int
@@ -298,7 +304,7 @@ func CaseSnake(s string) string {
 	return s
 }
 
-// Combine returns `s1` or `s2` or `s1 + sep + s2`, depending on their emptyness.
+// Combine returns `s1` or `s2` or `s1 + sep + s2`, depending on their emptiness.
 func Combine(s1 string, sep string, s2 string) string {
 	if h1 := s1 != ""; h1 && s2 != "" {
 		return s1 + sep + s2
@@ -308,6 +314,7 @@ func Combine(s1 string, sep string, s2 string) string {
 	return s2
 }
 
+// CountPrefixRunes returns how many occurrences of `prefix` are leading in `s`.
 func CountPrefixRunes(s string, prefix rune) (n int) {
 	for _, r := range s {
 		if r != prefix {
@@ -319,11 +326,11 @@ func CountPrefixRunes(s string, prefix rune) (n int) {
 	return
 }
 
+// CommonPrefix finds the prefix `pref` that all values in `s` share, if any.
 func CommonPrefix(s ...string) (pref string) {
 	if len(s) == 1 {
 		return s[0]
-	}
-	if len(s) > 1 {
+	} else if len(s) > 1 {
 		var preflen int
 		for cont, others, i := true, s[1:], 0; cont && i < len(s[0]); i++ {
 			for j := range others {
@@ -466,6 +473,7 @@ func Int64(i int64) string {
 	return strconv.FormatInt(i, 10)
 }
 
+// JoinB is like `strings.Join` but with a byte-length char as separator.
 func JoinB(s []string, b byte) string {
 	if len(s) == 0 {
 		return ""
@@ -481,6 +489,7 @@ func JoinB(s []string, b byte) string {
 	return buf.String()
 }
 
+// Uint64s joins together the hex-formatted `values`.
 func Uint64s(joinBy byte, values []uint64) string {
 	var b ustd.BytesWriter
 	for i := range values {
@@ -490,8 +499,8 @@ func Uint64s(joinBy byte, values []uint64) string {
 	return string(b.Data[1:])
 }
 
-// Has1Of returns whether `s` contains any of the specified `subStrings`.
-func Has1Of(s string, subStrings ...string) bool {
+// HasOneOf returns whether `s` contains any of the specified `subStrings`.
+func HasOneOf(s string, subStrings ...string) bool {
 	return FirstIn(s, subStrings...) != ""
 }
 
@@ -528,6 +537,7 @@ func IsUpper(s string) bool {
 	return true
 }
 
+// IsRepeat returns whether `s` contains nothing but one-or-more occurrences of `first`. If `first` is `0`, it is initialized from the first `rune` in `s`.
 func IsRepeat(s string, first rune) bool {
 	if len(s) > 0 {
 		for i, r := range s {
@@ -552,6 +562,7 @@ func Longest(strs []string) (s string) {
 	return
 }
 
+// Plu returns (if `s` is, say, `"foo"`) "1 foo" or "0 foos" or "2 foos", so appends "s" to `s` unless `n` is 1. The pluralizer is English-language-oriented and covers no corner-cases such as "bus" and the likes, but for simple command-line programs it's cheap.
 func Plu(n int, s string) (r string) {
 	r = Int(n) + " " + s
 	if n != 1 {
@@ -572,6 +583,7 @@ func Map(strs []string, f func(string) string) (items []string) {
 	return
 }
 
+// Merge returns a slice with the items of `s` and `with`, no duplicates, no guaranteed ordering. If `dropIf` is given, it is called to prevent values from being included in the return slice.
 func Merge(s []string, with []string, dropIf func(string) bool) []string {
 	if dropIf != nil {
 		for i := 0; i < len(with); i++ {
@@ -652,19 +664,21 @@ func Shortest(strs []string) (shortest string) {
 	return
 }
 
+// ShortestAndLongest returns the length of the shortest item in `s`, as well as the length of the longest. Both will return as `-1` if `s` is empty.
 func ShortestAndLongest(s ...string) (lenShortest int, lenLongest int) {
-	lenShortest = -1
+	lenShortest, lenLongest = -1, -1
+	isfirst := true
 	for i := range s {
-		l := len(s[i])
-		if l > lenLongest {
-			lenLongest = l
+		if l := len(s[i]); isfirst {
+			lenShortest, lenLongest, isfirst = l, l, false
+		} else {
+			if l > lenLongest {
+				lenLongest = l
+			}
+			if l < lenShortest {
+				lenShortest = l
+			}
 		}
-		if lenShortest == -1 || l < lenShortest {
-			lenShortest = l
-		}
-	}
-	if lenShortest == -1 {
-		lenShortest = 0
 	}
 	return
 }
@@ -677,6 +691,7 @@ func Split(s string, sep string) (splits []string) {
 	return
 }
 
+// SplitB returns an empty slice if `s` is emtpy, otherwise it's like `Split` but with a `byte` separator.
 func SplitB(s string, sep byte, initialCap int) (splits []string) {
 	if initialCap > 0 {
 		splits = make([]string, 0, initialCap)
@@ -696,6 +711,7 @@ func SplitB(s string, sep byte, initialCap int) (splits []string) {
 	return
 }
 
+// SplitR returns an empty slice if `s` is emtpy, otherwise it's like `Split` but with a `rune` separator.
 func SplitR(s string, sep rune, initialCap int) (splits []string) {
 	if initialCap > 0 {
 		splits = make([]string, 0, initialCap)
@@ -777,10 +793,12 @@ func Until(s string, needle string) string {
 	return BeforeFirst(s, needle, s)
 }
 
+// Times converts `Repeat` to `string`.
 func Times(s string, n int) string {
 	return string(Repeat(s, n))
 }
 
+// Repeat is a somewhat leaner version of `strings.Repeat`.
 func Repeat(s string, n int) (str []byte) {
 	if len(s) == 1 {
 		str = make([]byte, n)
@@ -796,6 +814,7 @@ func Repeat(s string, n int) (str []byte) {
 	return
 }
 
+// RepeatB is like `Repeat` but a single byte-length char.
 func RepeatB(b byte, n int) (s []byte) {
 	s = make([]byte, n)
 	for i := range s {
