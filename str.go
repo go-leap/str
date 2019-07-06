@@ -373,6 +373,15 @@ func Fewest(strs []string, substr string, otherwise func([]string) string) (s st
 	return
 }
 
+func Index(strs []string, check func(string) bool) int {
+	for i, s := range strs {
+		if check(s) {
+			return i
+		}
+	}
+	return -1
+}
+
 // Filter returns all `strs` that satisfy `check`.
 func Filter(strs []string, check func(string) bool) (filtered []string) {
 	if filtered = strs; len(strs) > 0 && check != nil {

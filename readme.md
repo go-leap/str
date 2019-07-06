@@ -335,6 +335,12 @@ func In(s string, strs ...string) bool
 ```
 In returns whether `strs` contains `s`.
 
+#### func  Index
+
+```go
+func Index(strs []string, check func(string) bool) int
+```
+
 #### func  Int64
 
 ```go
