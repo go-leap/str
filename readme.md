@@ -526,6 +526,12 @@ func Skip(s string, r byte) string
 ```
 Skip is a lower-level, byte-based TrimLeft.
 
+#### func  Sortable
+
+```go
+func Sortable(s []string, less func(string, string) bool) sort.Interface
+```
+
 #### func  Split
 
 ```go
